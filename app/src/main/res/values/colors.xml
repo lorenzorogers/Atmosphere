@@ -2,4 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- MAPLE-BASED COLOURS -->
+
+    <color name="red">#f82c67ff></color>
+    <color name="raspberry">#da0762ff></color>
+    <color name="orange">#f8752cff></color>
+    <color name="salmon">#f75012ff></color>
+    <color name="yellow">#f4b608ff></color>
+    <color name="gold">#e9a008ff></color>
+    <color name="green">#0ba84dff></color>
+    <color name="prismarine">#076d51ff></color>
+    <color name="teal">#009e8eff></color>
+    <color name="kelp">#143334ff></color>
+    <color name="blue">#2c5df8ff></color>
+    <color name="twilight">#05409fff></color>
+    <color name="purple">#842cf8ff></color>
+    <color name="violet">#5c08d9ff></color>
 </resources>
