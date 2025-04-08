@@ -5,18 +5,18 @@
 
     <!-- MAPLE-BASED COLOURS -->
 
-    <color name="red">#f82c67ff></color>
-    <color name="raspberry">#da0762ff></color>
-    <color name="orange">#f8752cff></color>
-    <color name="salmon">#f75012ff></color>
-    <color name="yellow">#f4b608ff></color>
-    <color name="gold">#e9a008ff></color>
-    <color name="green">#0ba84dff></color>
-    <color name="prismarine">#076d51ff></color>
-    <color name="teal">#009e8eff></color>
-    <color name="kelp">#143334ff></color>
-    <color name="blue">#2c5df8ff></color>
-    <color name="twilight">#05409fff></color>
-    <color name="purple">#842cf8ff></color>
-    <color name="violet">#5c08d9ff></color>
+    <color name="red">#da0762</color>
+    <color name="raspberry">#da0762</color>
+    <color name="orange">#f8752c</color>
+    <color name="salmon">#f75012</color>
+    <color name="yellow">#f4b608</color>
+    <color name="gold">#e9a008</color>
+    <color name="green">#0ba84d</color>
+    <color name="prismarine">#076d51</color>
+    <color name="teal">#009e8e</color>
+    <color name="kelp">#143334</color>
+    <color name="blue">#2c5df8</color>
+    <color name="twilight">#05409f</color>
+    <color name="purple">#842cf8</color>
+    <color name="violet">#5c08d9</color>
 </resources>
