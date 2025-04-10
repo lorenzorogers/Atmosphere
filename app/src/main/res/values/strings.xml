@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Atmosphere</string>
+
+    <string name="title_temperature">Temperature</string>
+    <string name="desc_temperature">Placeholder for temperature data</string>
+
+    <string name="title_humidity">Humidity\n 80%</string>
+    <string name="desc_humidity">Placeholder for humidity data</string>
+
+    <string name="title_wind_speed">Wind Speed\n 100km/h</string>
+    <string name="desc_wind_speed">Placeholder for wind speed</string>
+
+    <string name="title_uv_index">UV Index\n 6</string>
+    <string name="desc_uv_index">Placeholder for UV data</string>
+
+    <string name="title_pressure">Pressure\n 78%</string>
+    <string name="desc_pressure">Placeholder for pressure</string>
+
+    <string name="title_visibility">Visibility\n 10,000km/h</string>
+    <string name="desc_visibility">Placeholder for visibility</string>
+
+    <string name="app_bar_title">Weather Details</string>
+    <string name="temperature">Temperature</string>
+
 </resources>
