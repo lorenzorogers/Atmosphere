@@ -1,21 +1,20 @@
-package com.lorenzorogers.atmosphere.api;
-
-import androidx.annotation.NonNull;
+package com.lorenzorogers.atmosphere.network;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.function.Consumer;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+// THIS MUST RUN ASYNC
 public class RequestUtils {
     public static final MediaType JSON = MediaType.get("application/json");
     static OkHttpClient client = new OkHttpClient();
 
-    public static String fetch(String url) {
+    public static String fetch(String url, Consumer<String> callback) {
         try {
             return fetch(new URL(url));
         } catch (MalformedURLException e) {

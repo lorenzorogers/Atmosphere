@@ -1,7 +1,6 @@
 package com.lorenzorogers.atmosphere;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -10,7 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.lorenzorogers.atmosphere.api.RequestUtils;
+import com.lorenzorogers.atmosphere.network.RequestUtils;
 
 public class MainActivity extends AppCompatActivity {
 
