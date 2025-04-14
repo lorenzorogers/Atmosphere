@@ -14,6 +14,8 @@
         android:src="@drawable/arrow_back_24px"
         />
 
+    <Button android:id="@+id/testButton" android:text="Fetch Tester" app:layout_constraintTop_toTopOf="parent" app:layout_constraintRight_toRightOf="parent" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
@@ -39,21 +41,21 @@
             app:cardBackgroundColor="@color/teal">
 
             <TextView
-                android:id="@+id/windtext"
+                android:id="@+id/windText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Wind Speed"
                 android:padding="16dp"
                 android:gravity="center"
                 android:textSize="18sp"
-                android:textFontWeight="500"/>
+                android:textFontWeight="500"
+                />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/air_24px"
-                app:layout_constrainLeft_toLeftOf="@id/windtext"
-                />
+                tools:ignore="ContentDescription" />
         </androidx.cardview.widget.CardView>
 
         <!-- 2. Humidity -->
