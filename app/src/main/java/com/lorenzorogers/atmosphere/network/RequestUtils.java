@@ -55,4 +55,9 @@ public class RequestUtils {
             }
         });
     }
+
+    public static void fetchForecast(double latitude, double longitude, Consumer<String> callback) {
+        String requestUrl = String.format("https://api.open-meteo.com/v1/forecast?latitude=%s&longitude=%s&hourly=temperature_2m,rain,wind_speed_10m,visibility,apparent_temperature", latitude, longitude);
+        fetch(requestUrl, callback);
+    }
 }
