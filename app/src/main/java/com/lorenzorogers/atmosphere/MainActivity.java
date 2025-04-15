@@ -10,11 +10,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.lorenzorogers.atmosphere.network.RequestUtils;
+import com.lorenzorogers.atmosphere.forecast.LocationForecast;
 
 public class MainActivity extends AppCompatActivity {
-
-    private Button testButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +25,16 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        testButton = findViewById(R.id.testButton);
+        Button testButton = findViewById(R.id.testButton);
         testButton.setOnClickListener(
                 view -> {
-                    RequestUtils.fetch(
+                    LocationForecast.get(52.52, 13.41, forecast -> {
+                        Log.println(Log.DEBUG, "Atmosphere", String.valueOf(forecast.name()));
+                    });
+                    /*RequestUtils.fetch(
                             "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,rain,wind_speed_10m,visibility,apparent_temperature",
                             e -> Log.println(Log.INFO, "Atmosphere", e)
-                    );
+                    );*/
                 }
         );
     }
