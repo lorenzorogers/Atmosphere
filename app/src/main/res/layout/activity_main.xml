@@ -1,39 +1,59 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    tools:context=".MainActivity"
     android:background="@color/lightsteelblue"
+    tools:context=".MainActivity"
     tools:ignore="ContentDescription">
 
+
+    <!-- Back and App Icon -->
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="36dp"
+        android:src="@drawable/arrow_back_24px"
+        app:tint="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="16dp" />
+
+
+    <ImageView
+        android:id="@+id/appIcon"
+        android:layout_width="40dp"
+        android:layout_height="36dp"
+        android:src="@drawable/atmosphere_launcher_icon_round"
+        app:layout_constraintStart_toEndOf="@id/backButton"
+        app:layout_constraintTop_toTopOf="@id/backButton"
+        android:layout_marginStart="8dp" />
+
+
+    <!-- Temperature and Icon -->
     <LinearLayout
+        android:id="@+id/tempLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:showDividers="middle"
+        android:orientation="horizontal"
         android:divider="@drawable/empty_tall_divider"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="12dp"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="12dp">
+
 
         <TextView
             android:id="@+id/temperatureText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:padding="4dp"
+            android:layout_height="100dp"
             android:text="24°"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="68sp"
-            android:textStyle="bold"
-            app:layout_constraintRight_toLeftOf="@id/weatherIcon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="66sp"
+            android:textFontWeight="600" />
+
 
         <ImageView
             android:id="@+id/weatherIcon"
@@ -41,163 +61,323 @@
             android:layout_height="80dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/partly_cloudy_day_24px"
-            app:layout_constraintRight_toRightOf=""
-            app:layout_constraintTop_toTopOf="@id/temperatureText"
-            app:tint="@color/gold" />
+            app:tint="@color/yellow" />
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="35dp"
-        android:layout_height="25dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:src="@drawable/arrow_back_24px"
-        />
-    <Button android:id="@+id/testButton" android:text="@string/fetch_tester" app:layout_constraintTop_toTopOf="parent" app:layout_constraintRight_toRightOf="parent" android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
+    <!-- City and Country -->
+    <TextView
+        android:id="@+id/City"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Victoria, BC (PDT)"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textFontWeight="600"
+        android:fontFamily="@font/InterVariable"
+        app:layout_constraintTop_toBottomOf="@id/tempLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="0dp" />
+
+
+    <TextView
+        android:id="@+id/Country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Canada "
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textFontWeight="600"
+        android:fontFamily="@font/InterVariable"
+        app:layout_constraintTop_toBottomOf="@id/City"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="0dp" />
+
+
+    <!-- Test Button -->
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fetch_tester"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+
+    <!-- Grid of Cards -->
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:columnCount="2"
-        android:rowCount="2"
         android:padding="16dp"
-        android:layout_margin="16dp"
-        android:useDefaultMargins="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/Country"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- 1. Wind -->
+
+        <!-- Wind Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="160dp"
-            android:layout_height="160dp"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="@color/teal">
+            android:layout_height="120dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/lightteal"
+            android:layout_margin="8dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:gravity="center"
-                android:padding="8dp">
+                android:gravity="center">
 
-                <TextView
-                    android:id="@+id/windText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Wind Speed"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textFontWeight="700"
-                    android:outlineAmbientShadowColor="@color/blue" />
 
                 <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:id="@+id/windIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:src="@drawable/air_24px"
-                    tools:ignore="ContentDescription" />
+                    app:tint="@color/black" />
 
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- 2. Humidity -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="@color/teal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/windSpeed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Humidity"
-                    android:textColor="@color/black"
-                    android:textFontWeight="700"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/humidity_percentage_24px" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="@color/teal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="UV Index"
-                    android:textColor="@color/black"
-                    android:gravity="center"
+                    android:text="14.1 km/h"
                     android:textSize="18sp"
-                    android:textFontWeight="700" />
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
 
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/brightness_5_24px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wind"
+                    android:textFontWeight="600"
+                    android:textColor="@color/black" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
 
+        <!-- Humidity Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="160dp"
-            android:layout_height="160dp"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="@color/teal">
+            android:layout_height="120dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="@color/lightteal"
+            app:cardElevation="8dp"
+            android:layout_margin="8dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:gravity="center"
-                android:padding="8dp">
+                android:gravity="center">
+
+
+                <ImageView
+                    android:id="@+id/humidityIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/humidity_low_24px"
+                    app:tint="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/humidityValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="42%"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Humidity"
+                    android:textFontWeight="600"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- Apparent Temp Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="160dp"
+            android:layout_height="120dp"
+            app:cardBackgroundColor="@color/lightteal"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            android:layout_margin="8dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:id="@+id/apparentTempIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/device_thermostat_24px"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textFontWeight="600"
+                    android:gravity="center"
+                    android:text="Feels like"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/apparentTempValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="22°"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- Visibility Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="160dp"
+            android:layout_height="120dp"
+            app:cardBackgroundColor="@color/lightteal"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            android:layout_margin="8dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:id="@+id/visibilityIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/landscape_24px"
+                    app:tint="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/visibilityValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10.5 km"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Visibility"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textSize="18sp"
-                    android:textFontWeight="700" />
+                    android:textFontWeight="600"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="160dp"
+            android:layout_height="120dp"
+            android:backgroundTint="@color/lightteal"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/landscape_24px" />
+                    android:id="@+id/uvIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/brightness_5_24px"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:id="@+id/uvIndexValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5 (Moderate)"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UV Index"
+                    android:textFontWeight="600"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="160dp"
+            android:layout_height="120dp"
+            app:cardCornerRadius="16dp"
+            android:backgroundTint="@color/lightteal"
+            app:cardElevation="8dp"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/precipIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/rainy_light_24px"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:id="@+id/precipValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1.2 mm"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Precipitation"
+                    android:textFontWeight="600"
+                    android:textColor="@color/black" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
 
     </GridLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
