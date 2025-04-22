@@ -1,13 +1,9 @@
 package com.lorenzorogers.atmosphere.forecast;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.lorenzorogers.atmosphere.network.RequestUtils;
 import com.lorenzorogers.atmosphere.network.data.RawWeatherData;
 
-import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
