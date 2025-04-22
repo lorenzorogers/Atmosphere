@@ -3,6 +3,7 @@ package com.lorenzorogers.atmosphere;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,17 +26,17 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Button testButton = findViewById(R.id.testButton);
-        testButton.setOnClickListener(
-                view -> {
-                    LocationForecast.get(52.52, 13.41, forecast -> {
-                        Log.println(Log.DEBUG, "Atmosphere", String.valueOf(forecast.name()));
-                    });
-                    /*RequestUtils.fetch(
-                            "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,rain,wind_speed_10m,visibility,apparent_temperature",
-                            e -> Log.println(Log.INFO, "Atmosphere", e)
-                    );*/
-                }
-        );
+        LocationForecast.get(48.42707924722373, -123.3645493928255, forecast -> {
+
+            TextView temperatureText = findViewById(R.id.temperatureText);
+            TextView windSpeedText = findViewById(R.id.windSpeed);
+            TextView visibilityText = findViewById(R.id.visibilityValue);
+            TextView apparentTempText = findViewById(R.id.apparentTempValue);
+
+            temperatureText.setText(String.format("%s°", Math.round(forecast.data().get(0).temperature())));
+            windSpeedText.setText(String.format("%s km/h", forecast.data().get(0).windSpeed()));
+            visibilityText.setText(String.format("%s km", forecast.data().get(0).visibility() / 1000));
+            apparentTempText.setText(String.format("%s°", Math.round(forecast.data().get(0).apparentTemperature())));
+        });
     }
 }

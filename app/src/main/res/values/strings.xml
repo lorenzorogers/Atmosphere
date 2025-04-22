@@ -3,21 +3,35 @@
 
     <string name="title_temperature">Temperature</string>
     <string name="desc_temperature">Placeholder for temperature data</string>
+    <string name="placeholder_temperature">--°</string>>
 
-    <string name="title_humidity">Humidity\n 80%</string>
+    <string name="title_apparent_temperature">Feels like</string>
+    <string name="desc_apparent_temperature">Placeholder for apparent temperature data</string>
+    <string name="placeholder_apparent_temperature">--°</string>>
+
+    <string name="title_humidity">Humidity</string>
     <string name="desc_humidity">Placeholder for humidity data</string>
+    <string name="placeholder_humidity">--%</string>>
 
-    <string name="title_wind_speed">Wind Speed\n 100km/h</string>
+    <string name="title_wind_speed">Wind Speed</string>
     <string name="desc_wind_speed">Placeholder for wind speed</string>
+    <string name="placeholder_wind_speed">-- km/h</string>>
 
-    <string name="title_uv_index">UV Index\n 6</string>
+    <string name="title_uv_index">UV Index</string>
     <string name="desc_uv_index">Placeholder for UV data</string>
+    <string name="placeholder_uv_index">-</string>>
 
-    <string name="title_pressure">Pressure\n 78%</string>
+    <string name="title_pressure">Pressure</string>
     <string name="desc_pressure">Placeholder for pressure</string>
+    <string name="placeholder_pressure">--%</string>>
 
-    <string name="title_visibility">Visibility\n 10,000km/h</string>
+    <string name="title_visibility">Visibility</string>
     <string name="desc_visibility">Placeholder for visibility</string>
+    <string name="placeholder_visibility">-- km</string>>
+
+    <string name="title_precipitation">Precipitation</string>
+    <string name="desc_precipitation">Placeholder for precipitation</string>
+    <string name="placeholder_precipitation">-- mm</string>>
 
     <string name="app_bar_title">Weather Details</string>
     <string name="temperature">Temperature</string>

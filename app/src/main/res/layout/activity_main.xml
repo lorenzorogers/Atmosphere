@@ -48,7 +48,7 @@
             android:id="@+id/temperatureText"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:text="24°"
+            android:text="@string/placeholder_temperature"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="66sp"
@@ -74,7 +74,6 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textFontWeight="600"
-        android:fontFamily="@font/intervariable"
         app:layout_constraintTop_toBottomOf="@id/tempLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,27 +84,14 @@
         android:id="@+id/Country"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Canada "
+        android:text="Canada"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textFontWeight="600"
-        android:fontFamily="@font/intervariable"
         app:layout_constraintTop_toBottomOf="@id/City"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="0dp" />
-
-
-    <!-- Test Button -->
-    <Button
-        android:id="@+id/testButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fetch_tester"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp" />
-
 
     <!-- Grid of Cards -->
     <GridLayout
@@ -149,7 +135,7 @@
                     android:id="@+id/windSpeed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="14.1 km/h"
+                    android:text="@string/placeholder_wind_speed"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -158,7 +144,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wind"
+                    android:text="@string/title_wind_speed"
                     android:textFontWeight="600"
                     android:textColor="@color/black" />
             </LinearLayout>
@@ -193,7 +179,7 @@
                     android:id="@+id/humidityValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="42%"
+                    android:text="@string/placeholder_humidity"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -202,7 +188,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Humidity"
+                    android:text="@string/title_humidity"
                     android:textFontWeight="600"
                     android:textColor="@color/black" />
             </LinearLayout>
@@ -238,13 +224,13 @@
                     android:layout_height="wrap_content"
                     android:textFontWeight="600"
                     android:gravity="center"
-                    android:text="Feels like"
+                    android:text="@string/title_apparent_temperature"
                     android:textColor="@color/black"/>
                 <TextView
                     android:id="@+id/apparentTempValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="22°"
+                    android:text="@string/placeholder_apparent_temperature"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -281,7 +267,7 @@
                     android:id="@+id/visibilityValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10.5 km"
+                    android:text="@string/placeholder_visibility"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -290,7 +276,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Visibility"
+                    android:text="@string/title_visibility"
                     android:textFontWeight="600"
                     android:textColor="@color/black" />
             </LinearLayout>
@@ -321,7 +307,7 @@
                     android:id="@+id/uvIndexValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5 (Moderate)"
+                    android:text="@string/placeholder_uv_index"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -329,7 +315,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="UV Index"
+                    android:text="@string/title_uv_index"
                     android:textFontWeight="600"
                     android:textColor="@color/black" />
             </LinearLayout>
@@ -350,17 +336,17 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/precipIcon"
+                    android:id="@+id/precipitationIcon"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@drawable/rainy_light_24px"
                     app:tint="@color/black" />
 
                 <TextView
-                    android:id="@+id/precipValue"
+                    android:id="@+id/precipitationValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1.2 mm"
+                    android:text="@string/placeholder_precipitation"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -368,7 +354,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Precipitation"
+                    android:text="@string/title_precipitation"
                     android:textFontWeight="600"
                     android:textColor="@color/black" />
             </LinearLayout>
