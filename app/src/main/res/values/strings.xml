@@ -21,5 +21,6 @@
 
     <string name="app_bar_title">Weather Details</string>
     <string name="temperature">Temperature</string>
+    <string name="fetch_tester">Fetch Tester</string>
 
 </resources>
