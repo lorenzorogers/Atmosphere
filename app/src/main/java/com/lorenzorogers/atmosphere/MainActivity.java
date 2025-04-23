@@ -1,8 +1,6 @@
 package com.lorenzorogers.atmosphere;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -33,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
             TextView visibilityText = findViewById(R.id.visibilityValue);
             TextView apparentTempText = findViewById(R.id.apparentTempValue);
 
-            temperatureText.setText(String.format("%s°", Math.round(forecast.data().get(0).temperature())));
-            windSpeedText.setText(String.format("%s km/h", forecast.data().get(0).windSpeed()));
-            visibilityText.setText(String.format("%s km", forecast.data().get(0).visibility() / 1000));
-            apparentTempText.setText(String.format("%s°", Math.round(forecast.data().get(0).apparentTemperature())));
+            temperatureText.setText(String.format("%s°", Math.round(forecast.current().temperature())));
+            windSpeedText.setText(String.format("%s km/h", forecast.current().windSpeed()));
+            visibilityText.setText(String.format("%s km", forecast.hourly().get(0).visibility() / 1000));
+            apparentTempText.setText(String.format("%s°", Math.round(forecast.current().apparentTemperature())));
         });
     }
 }

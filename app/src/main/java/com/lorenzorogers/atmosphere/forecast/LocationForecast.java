@@ -10,29 +10,43 @@ import com.lorenzorogers.atmosphere.network.data.RawWeatherData;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.function.Consumer;
 
-public record LocationForecast(double latitude, double longitude, String timezone, int elevation, String name, List<TimestampedWeatherData> data) {
+public record LocationForecast(double latitude, double longitude, String timezone, int elevation, String name, CurrentWeatherData current, List<TimestampedWeatherData> hourly) {
 
     static final Gson GSON = new Gson();
 
     public static void get(double latitude, double longitude, Consumer<LocationForecast> callback) {
-        RequestUtils.fetchForecast(latitude, longitude, response -> {
+        RequestUtils.fetchForecast(latitude, longitude, TimeZone.getDefault(), response -> {
             RawWeatherData rawData = GSON.fromJson(response, RawWeatherData.class);
+
+            CurrentWeatherData currentWeatherData = new CurrentWeatherData(
+                    rawData.current().temperature_2m(),
+                    rawData.current().is_day() == 1,
+                    rawData.current().apparent_temperature(),
+                    rawData.current().relative_humidity_2m(),
+                    rawData.current().precipitation(),
+                    rawData.current().surface_pressure(),
+                    rawData.current().wind_speed_10m()
+            );
 
             ArrayList<TimestampedWeatherData> forecastList = new ArrayList<>();
 
             for (int i = 0; i < rawData.hourly().time().size(); i++) {
                 float temperature = rawData.hourly().temperature_2m().get(i);
+                float rain = rawData.hourly().rain().get(i);
                 float windSpeed = rawData.hourly().wind_speed_10m().get(i);
                 int visibility = rawData.hourly().visibility().get(i);
                 float apparentTemperature = rawData.hourly().apparent_temperature().get(i);
+                float relativeHumidity = rawData.hourly().relative_humidity_2m().get(i);
+                float surfacePressure = rawData.hourly().surface_pressure().get(i);
                 LocalDateTime timestamp = LocalDateTime.parse(rawData.hourly().time().get(i));
-                TimestampedWeatherData newEntry = new TimestampedWeatherData(temperature, windSpeed, visibility, apparentTemperature, timestamp);
+                TimestampedWeatherData newEntry = new TimestampedWeatherData(temperature, rain, windSpeed, visibility, apparentTemperature, relativeHumidity, surfacePressure, timestamp);
                 forecastList.add(newEntry);
             }
 
-            LocationForecast forecast = new LocationForecast(latitude, longitude, rawData.timezone(), rawData.elevation(), "Town Name", forecastList);
+            LocationForecast forecast = new LocationForecast(latitude, longitude, rawData.timezone(), rawData.elevation(), "Town Name", currentWeatherData, forecastList);
 
             Handler handler = new Handler(Looper.getMainLooper());
 
@@ -42,5 +56,6 @@ public record LocationForecast(double latitude, double longitude, String timezon
         });
     }
 
-    public record TimestampedWeatherData(float temperature, float windSpeed, int visibility, float apparentTemperature, LocalDateTime time) {}
+    public record TimestampedWeatherData(float temperature, float rain, float windSpeed, int visibility, float apparentTemperature, float relativeHumidity, float surfacePressure, LocalDateTime time) {}
+    public record CurrentWeatherData(float temperature, boolean isDay, float apparentTemperature, int relativeHumidity, float precipitation, float surfacePressure, float windSpeed) {}
 }
