@@ -5,7 +5,7 @@ import com.lorenzorogers.atmosphere.network.RequestUtils;
 import java.util.ArrayList;
 
 public class RequestBuilder {
-    private ArrayList<QueryParameter> params;
+    private final ArrayList<QueryParameter> params = new ArrayList<>();
     private final String urlBase;
 
     public RequestBuilder(String base) {

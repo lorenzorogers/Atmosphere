@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        LocationForecast.get(48.42707924722373, -123.3645493928255, forecast -> {
+        LocationForecast.get(48.451816, -123.32826, forecast -> {
 
             TextView temperatureText = findViewById(R.id.temperatureText);
             TextView windSpeedText = findViewById(R.id.windSpeed);

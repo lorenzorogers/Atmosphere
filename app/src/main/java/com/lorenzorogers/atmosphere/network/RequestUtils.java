@@ -62,13 +62,13 @@ public class RequestUtils {
 
     public static void fetchForecast(double latitude, double longitude, TimeZone timezone, Consumer<String> callback) {
         String timezoneDisplayName = timezone.getID();
-        //String queryParams = String.format("?latitude=%s&longitude=%s&hourly=temperature_2m,rain,wind_speed_10m,visibility,apparent_temperature&timezone=%s", latitude, longitude, timezoneDisplayName);
-        String requestUrl2 = new RequestBuilder("https://api.open-meteo.com/v1/forecast")
+        String requestUrl = new RequestBuilder("https://api.open-meteo.com/v1/forecast")
                 .addParameter("latitude", latitude)
                 .addParameter("longitude", longitude)
+                .addParameter("hourly", "temperature_2m,rain,wind_speed_10m,visibility,apparent_temperature,relative_humidity_2m,surface_pressure")
+                .addParameter("current", "temperature_2m,is_day,apparent_temperature,relative_humidity_2m,precipitation,surface_pressure,wind_speed_10m")
+                .addParameter("timezone", timezoneDisplayName)
                 .build();
-        String queryParams = String.format("?latitude=%s&longitude=%s&hourly=temperature_2m,rain,wind_speed_10m,visibility,apparent_temperature,relative_humidity_2m,surface_pressure&current=temperature_2m,is_day,apparent_temperature,relative_humidity_2m,precipitation,surface_pressure,wind_speed_10m&timezone=%s", latitude, longitude, urlPrepare(timezoneDisplayName));
-        String requestUrl = "https://api.open-meteo.com/v1/forecast" + queryParams;
         fetch(requestUrl, callback);
     }
 
