@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.Morning);
+        mediaPlayer = MediaPlayer.create(this, R.raw.morning);
         mediaPlayer.setLooping(true); // loop the music
         mediaPlayer.start();
 
