@@ -2,6 +2,7 @@ package com.lorenzorogers.atmosphere;
 
 import android.os.Bundle;
 
+import com.google.android.material.R.color;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -20,5 +21,7 @@ public class HomeActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Link.makeTextViewLink(this, "copyright2");
     }
 }
