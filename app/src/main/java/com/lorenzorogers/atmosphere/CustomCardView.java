@@ -65,7 +65,6 @@ public class CustomCardView extends CardView {
             int bgColor = a.getColor(R.styleable.CustomCardView_cardBgColor, Color.WHITE);
             setCardBackgroundColor(bgColor);
         }
-
         a.recycle();
     }
 
