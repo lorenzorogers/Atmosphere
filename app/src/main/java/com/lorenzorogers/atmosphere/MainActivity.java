@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Back button navigates to HomeActivity
+        //Back button navigates to HomeActivity
         ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
