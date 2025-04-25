@@ -4,25 +4,26 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/material_dynamic_neutral90"
     tools:context="MainActivity"
     tools:ignore="HardcodedText">
 
     <ImageView
         android:id="@+id/backButton"
         android:layout_width="40dp"
-        android:layout_height="36dp"
+        android:layout_height="40dp"
         android:src="@drawable/arrow_back_24px"
         app:tint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="16dp" />
+        android:layout_margin="12dp" />
 
     <ImageView
         android:id="@+id/appIcon"
         android:layout_width="40dp"
-        android:layout_height="36dp"
-        android:src="@drawable/atmosphere_launcher_icon_round"
+        android:layout_height="40dp"
+        android:background="@color/material_dynamic_neutral90"
+        android:src="@drawable/logo_nobg"
         app:layout_constraintStart_toEndOf="@id/backButton"
         app:layout_constraintTop_toTopOf="@id/backButton"
         android:layout_marginStart="2dp" />

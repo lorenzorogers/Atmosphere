@@ -1,8 +1,8 @@
 <resources>
     <declare-styleable name="CustomCardView">
-        <attr name="cardIcon" format="reference" />
-        <attr name="cardTitle" format="string" />
-        <attr name="cardValue" format="string" />
-        <attr name="cardBgColor" format="reference|color" />
+        <attr name="cardTitle" format="string"/>
+        <attr name="cardValue" format="string"/>
+        <attr name="cardIcon" format="reference"/>
+        <attr name="cardBgColor" format="color"/>
     </declare-styleable>
 </resources>
