@@ -63,7 +63,6 @@ public class HomeActivity extends AppCompatActivity {
                 if (beforeFixed && afterFixed) {
                     return false;
                 }
-
                 Collections.swap(cardItemList, fromPos, toPos);
                 adapter.notifyItemMoved(fromPos, toPos);
                 return true;
