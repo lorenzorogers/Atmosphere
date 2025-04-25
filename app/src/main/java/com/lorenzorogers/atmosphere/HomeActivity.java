@@ -2,81 +2,88 @@ package com.lorenzorogers.atmosphere;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
-
+import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 public class HomeActivity extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private CardItemAdapter adapter;
-    private List<CardItem> cardItemList;
+    private ArrayList<CardItem> cardItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_home);  // Your layout with the RecyclerView
 
-        // Initialize the RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Sample data for CardItems (you can add more cards)
         cardItemList = new ArrayList<>();
-        cardItemList.add(new CardItem("Title 1", "Subtitle 1", R.drawable.ic_launcher_foreground));
-        cardItemList.add(new CardItem("Title 2", "Subtitle 2", R.drawable.ic_launcher_foreground));
-        cardItemList.add(new CardItem("Title 3", "Subtitle 3", R.drawable.ic_launcher_foreground));
 
-        // Set up the adapter with the RecyclerView
+        // Add sample cards (replace with your actual logic)
+        cardItemList.add(new CardItem("Card 1", "This is the first card", R.drawable.ic_sample_icon, true));
+        cardItemList.add(new CardItem("Card 2", "Fixed card", R.drawable.ic_sample_icon, false));
+        cardItemList.add(new CardItem("Card 3", "Another moveable one", R.drawable.ic_sample_icon, true));
+
         adapter = new CardItemAdapter(cardItemList);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));  // Grid with 2 columns
         recyclerView.setAdapter(adapter);
 
-        // Create the ItemTouchHelper.Callback and attach it to the RecyclerView
-        ItemTouchHelper.Callback callback = new ItemTouchHelper.Callback() {
+        // Drag & drop logic with immovable card support
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
+                0) {
 
             @Override
             public boolean isLongPressDragEnabled() {
-                return true; // Enable long-press drag
-            }
-
-            @Override
-            public boolean isItemViewSwipeEnabled() {
-                return false; // Disable swipe to dismiss functionality
-            }
-
-            // Implement onMove to handle drag-and-drop logic
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                int fromPosition = viewHolder.getAdapterPosition();
-                int toPosition = target.getAdapterPosition();
-
-                if (fromPosition < 0 || toPosition < 0 || fromPosition >= cardItemList.size() || toPosition >= cardItemList.size()) {
-                    return false;
-                }
-
-                // Move the item in the list
-                adapter.onItemMove(fromPosition, toPosition);
                 return true;
             }
 
-            // Implement onSwiped to disable swipe-to-dismiss
+            @Override
+            public boolean onMove(RecyclerView recyclerView,
+                                  RecyclerView.ViewHolder viewHolder,
+                                  RecyclerView.ViewHolder target) {
+
+                int fromPos = viewHolder.getAdapterPosition();
+                int toPos = target.getAdapterPosition();
+
+                // Don't allow moving non-moveable items or into positions between two fixed cards
+                if (!cardItemList.get(fromPos).isMoveable() || !cardItemList.get(toPos).isMoveable()) {
+                    return false;
+                }
+
+                // Don't allow placing moveable cards between two immovable cards
+                boolean beforeFixed = toPos > 0 && !cardItemList.get(toPos - 1).isMoveable();
+                boolean afterFixed = toPos < cardItemList.size() - 1 && !cardItemList.get(toPos + 1).isMoveable();
+                if (beforeFixed && afterFixed) {
+                    return false;
+                }
+
+                Collections.swap(cardItemList, fromPos, toPos);
+                adapter.notifyItemMoved(fromPos, toPos);
+                return true;
+            }
+
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                // No swipe-to-dismiss behavior
+                // Swipe disabled
             }
 
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                // Flags for the drag movement (up, down, left, right)
-                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-                return makeMovementFlags(dragFlags, 0); // No swipe flags
+                int pos = viewHolder.getAdapterPosition();
+                if (!cardItemList.get(pos).isMoveable()) {
+                    return 0;  // No movement allowed
+                }
+                return makeMovementFlags(
+                        ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
+                        0
+                );
             }
         };
 
-        // Attach ItemTouchHelper to RecyclerView
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        new ItemTouchHelper(callback).attachToRecyclerView(recyclerView);
     }
 }

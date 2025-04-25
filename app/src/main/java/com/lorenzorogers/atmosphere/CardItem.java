@@ -4,25 +4,15 @@ public class CardItem {
     private String title;
     private String subtitle;
     private int iconResId;
-    private boolean isMovable; // Add a boolean flag to control whether the card is movable
+    private boolean isMoveable;
 
-    public CardItem(String title, String subtitle, int iconResId, boolean isMovable) {
+    public CardItem(String title, String subtitle, int iconResId, boolean isMoveable) {
         this.title = title;
         this.subtitle = subtitle;
         this.iconResId = iconResId;
-        this.isMovable = isMovable; // Initialize the movable status
+        this.isMoveable = isMoveable;
     }
 
-    // Getter and setter for the isMovable flag
-    public boolean isMovable() {
-        return isMovable;
-    }
-
-    public void setMovable(boolean movable) {
-        isMovable = movable;
-    }
-
-    // Getters
     public String getTitle() {
         return title;
     }
@@ -33,5 +23,13 @@ public class CardItem {
 
     public int getIconResId() {
         return iconResId;
+    }
+
+    public boolean isMoveable() {
+        return isMoveable;
+    }
+
+    public void setMoveable(boolean moveable) {
+        this.isMoveable = moveable;
     }
 }
