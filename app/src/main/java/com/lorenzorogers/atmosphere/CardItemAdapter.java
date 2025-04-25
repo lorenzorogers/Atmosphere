@@ -1,10 +1,11 @@
-// CardItemAdapter.java
 package com.lorenzorogers.atmosphere;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,6 @@ public class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.CardIt
 
     private List<CardItem> cardItemList;
 
-    // Constructor to pass data to the adapter
     public CardItemAdapter(List<CardItem> cardItemList) {
         this.cardItemList = cardItemList;
     }
@@ -24,63 +24,68 @@ public class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.CardIt
     @NonNull
     @Override
     public CardItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the card item layout
-        View itemView = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_card, parent, false);
-        return new CardItemViewHolder(itemView);
+        return new CardItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CardItemViewHolder holder, int position) {
-        CardItem cardItem = cardItemList.get(position);
+        CardItem item = cardItemList.get(position);
 
-        // Set data to the views
-        holder.cardTitle.setText(cardItem.getTitle());
-        holder.cardSubtitle.setText(cardItem.getSubtitle());
-        holder.cardIcon.setImageResource(cardItem.getIconResId());
+        holder.cardTitle.setText(item.getTitle());
+        holder.cardSubtitle.setText(item.getSubtitle());
+        holder.cardIcon.setImageResource(item.getIconResId());
 
-        // Set the draggable status based on the 'isMovable' flag
-        holder.itemView.setOnTouchListener((v, event) -> {
-            if (cardItem.isMovable()) {
-                return false; // Prevent dragging
-            } else {
-                // Ensure that the view performs a click action if touched
-                v.performClick();
-                return true; // Allow dragging
-            }
+        holder.moreOptions.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+            popupMenu.inflate(R.menu.card_item_menu);
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                if (menuItem.getItemId() == R.id.menu_remove) {
+                    removeItem(holder.getAdapterPosition());
+                    return true;
+                }
+                return false;
+            });
+            popupMenu.show();
         });
     }
-
-
 
     @Override
     public int getItemCount() {
         return cardItemList.size();
     }
 
-    // ViewHolder class to hold references to card views
+    public void removeItem(int position) {
+        if (position >= 0 && position < cardItemList.size()) {
+            cardItemList.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public void moveItem(int fromPosition, int toPosition) {
+        if (fromPosition < 0 || toPosition < 0 ||
+                fromPosition >= cardItemList.size() || toPosition >= cardItemList.size()) return;
+
+        CardItem item = cardItemList.remove(fromPosition);
+        cardItemList.add(toPosition, item);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public List<CardItem> getCardItems() {
+        return cardItemList;
+    }
+
     public static class CardItemViewHolder extends RecyclerView.ViewHolder {
         TextView cardTitle, cardSubtitle;
-        ImageView cardIcon;
+        ImageView cardIcon, moreOptions;
 
-        public CardItemViewHolder(View itemView) {
+        public CardItemViewHolder(@NonNull View itemView) {
             super(itemView);
             cardTitle = itemView.findViewById(R.id.cardTitle);
             cardSubtitle = itemView.findViewById(R.id.cardSubtitle);
             cardIcon = itemView.findViewById(R.id.cardIcon);
+            moreOptions = itemView.findViewById(R.id.moreOptions);
         }
-    }
-
-    // Method to move an item within the list
-    public void onItemMove(int fromPosition, int toPosition) {
-        if (fromPosition < 0 || toPosition < 0 || fromPosition >= cardItemList.size() || toPosition >= cardItemList.size()) {
-            return;
-        }
-
-        CardItem movedItem = cardItemList.get(fromPosition);
-        cardItemList.remove(fromPosition);
-        cardItemList.add(toPosition, movedItem);
-
-        notifyItemMoved(fromPosition, toPosition);
     }
 }

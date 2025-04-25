@@ -72,6 +72,7 @@
                     android:id="@+id/settingsIcon"
                     android:layout_width="140dp"
                     android:elevation="10dp"
+                    android:padding="15dp"
                     android:layout_height="140dp"
                     app:tint="@color/black"
                     android:layout_gravity="center_horizontal"

@@ -1,66 +1,63 @@
 package com.lorenzorogers.atmosphere;
 
-import static androidx.recyclerview.widget.ItemTouchHelper.Callback.makeMovementFlags;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Collections;
-import java.util.List;
-
 public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
-    private final CardItemAdapter mAdapter;
-    private final List<CardItem> mCardItemList;
+    private final CardItemAdapter adapter;
 
-    public MyItemTouchHelperCallback(CardItemAdapter adapter, List<CardItem> cardItemList) {
-        mAdapter = adapter;
-        mCardItemList = cardItemList;
-    }
-
-    @Override
-    public boolean isLongPressDragEnabled() {
-        return true; // Allows dragging by long press
-    }
-
-    @Override
-    public boolean isItemViewSwipeEnabled() {
-        return false; // Disabling swipe for this example
+    public MyItemTouchHelperCallback(CardItemAdapter adapter) {
+        this.adapter = adapter;
     }
 
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-        // Determine whether the item can be moved or not based on isMovable
-        CardItem cardItem = mCardItemList.get(viewHolder.getAdapterPosition());
+        int position = viewHolder.getAdapterPosition();
+        CardItem item = adapter.getCardItems().get(position);
 
-        if (cardItem.isMovable()) {
-            return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        if (item.isMovable()) {
+            int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+            return makeMovementFlags(dragFlags, 0);
         } else {
-            return 0; // If not movable, return 0 to prevent dragging
+            return 0;
         }
     }
 
     @Override
-    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-        int fromPosition = viewHolder.getAdapterPosition();
+    public boolean onMove(@NonNull RecyclerView recyclerView,
+                          @NonNull RecyclerView.ViewHolder source,
+                          @NonNull RecyclerView.ViewHolder target) {
+
+        int fromPosition = source.getAdapterPosition();
         int toPosition = target.getAdapterPosition();
 
-        CardItem fromItem = mCardItemList.get(fromPosition);
-        CardItem toItem = mCardItemList.get(toPosition);
+        CardItem fromItem = adapter.getCardItems().get(fromPosition);
+        CardItem toItem = adapter.getCardItems().get(toPosition);
 
-        // Only allow moving if both items are movable
+        // Prevent moving if either item is not movable
         if (fromItem.isMovable() && toItem.isMovable()) {
-            Collections.swap(mCardItemList, fromPosition, toPosition);
-            mAdapter.notifyItemMoved(fromPosition, toPosition);
-            return true;
+            return false;
         }
 
-        return false; // Prevent movement if either item is not movable
+        // Prevent placing between two non-movable cards
+        if ((toPosition > 0 && !adapter.getCardItems().get(toPosition - 1).isMovable()) &&
+                (toPosition < adapter.getItemCount() - 1 && !adapter.getCardItems().get(toPosition + 1).isMovable())) {
+            return false;
+        }
+
+        adapter.moveItem(fromPosition, toPosition);
+        return true;
     }
 
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-        // Handle swipe if needed (e.g., for deletion)
+        // No swiping supported
+    }
+
+    @Override
+    public boolean isLongPressDragEnabled() {
+        return true; // You can also toggle this if you want to enable/disable drag on long press
     }
 }

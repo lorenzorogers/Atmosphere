@@ -4,13 +4,13 @@ public class CardItem {
     private String title;
     private String subtitle;
     private int iconResId;
-    private boolean isMoveable;
+    private boolean movable;
 
-    public CardItem(String title, String subtitle, int iconResId, boolean isMoveable) {
+    public CardItem(String title, String subtitle, int iconResId, boolean movable) {
         this.title = title;
         this.subtitle = subtitle;
         this.iconResId = iconResId;
-        this.isMoveable = isMoveable;
+        this.movable = movable;
     }
 
     public String getTitle() {
@@ -25,11 +25,11 @@ public class CardItem {
         return iconResId;
     }
 
-    public boolean isMoveable() {
-        return isMoveable;
+    public boolean isMovable() {
+        return movable;
     }
 
-    public void setMoveable(boolean moveable) {
-        this.isMoveable = moveable;
+    public void setMovable(boolean movable) {
+        this.movable = movable;
     }
 }

@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-
     private RecyclerView recyclerView;
     private CardItemAdapter adapter;
     private ArrayList<CardItem> cardItemList;
@@ -19,20 +19,25 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);  // Your layout with the RecyclerView
 
-        recyclerView = findViewById(R.id.recyclerView);
-        cardItemList = new ArrayList<>();
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 columns
 
-        // Add sample cards (replace with your actual logic)
-        cardItemList.add(new CardItem("Card 1", "This is the first card", R.drawable.ic_sample_icon, true));
-        cardItemList.add(new CardItem("Card 2", "Fixed card", R.drawable.ic_sample_icon, false));
-        cardItemList.add(new CardItem("Card 3", "Another moveable one", R.drawable.ic_sample_icon, true));
+        List<CardItem> cardItems = new ArrayList<>();
+        cardItems.add(new CardItem("Here", "Use location services", R.drawable.location_on_24px, false));
+        cardItems.add(new CardItem("Home", "Set home location in settings", R.drawable.home_pin_24px, false));
+        cardItems.add(new CardItem("Add location", "", R.drawable.add_24px, false));
+        cardItems.add(new CardItem("Settings", "", R.drawable.settings_24px, false));
 
-        adapter = new CardItemAdapter(cardItemList);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));  // Grid with 2 columns
+        CardItemAdapter adapter = new CardItemAdapter(cardItems);
         recyclerView.setAdapter(adapter);
+// Attach drag-and-drop handler
+        ItemTouchHelper.Callback callback = new MyItemTouchHelperCallback(adapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
 
         // Drag & drop logic with immovable card support
-        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(
+        ItemTouchHelper.SimpleCallback c = new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
                 0) {
 
@@ -49,14 +54,12 @@ public class HomeActivity extends AppCompatActivity {
                 int fromPos = viewHolder.getAdapterPosition();
                 int toPos = target.getAdapterPosition();
 
-                // Don't allow moving non-moveable items or into positions between two fixed cards
-                if (!cardItemList.get(fromPos).isMoveable() || !cardItemList.get(toPos).isMoveable()) {
+                if (!cardItemList.get(fromPos).isMovable() || !cardItemList.get(toPos).isMovable()) {
                     return false;
                 }
 
-                // Don't allow placing moveable cards between two immovable cards
-                boolean beforeFixed = toPos > 0 && !cardItemList.get(toPos - 1).isMoveable();
-                boolean afterFixed = toPos < cardItemList.size() - 1 && !cardItemList.get(toPos + 1).isMoveable();
+                boolean beforeFixed = toPos > 0 && !cardItemList.get(toPos - 1).isMovable();
+                boolean afterFixed = toPos < cardItemList.size() - 1 && !cardItemList.get(toPos + 1).isMovable();
                 if (beforeFixed && afterFixed) {
                     return false;
                 }
@@ -74,7 +77,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 int pos = viewHolder.getAdapterPosition();
-                if (!cardItemList.get(pos).isMoveable()) {
+                if (!cardItemList.get(pos).isMovable()) {
                     return 0;  // No movement allowed
                 }
                 return makeMovementFlags(
