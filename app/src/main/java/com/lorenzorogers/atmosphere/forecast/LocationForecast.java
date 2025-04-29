@@ -1,10 +1,12 @@
 package com.lorenzorogers.atmosphere.forecast;
 
+import static com.lorenzorogers.atmosphere.network.RequestUtils.GSON;
+
 import android.os.Handler;
 import android.os.Looper;
 
-import com.google.gson.Gson;
 import com.lorenzorogers.atmosphere.network.RequestUtils;
+import com.lorenzorogers.atmosphere.network.Geocoder;
 import com.lorenzorogers.atmosphere.network.data.RawWeatherData;
 
 import java.time.LocalDateTime;
@@ -13,11 +15,9 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.function.Consumer;
 
-public record LocationForecast(double latitude, double longitude, String timezone, int elevation, String name, CurrentWeatherData current, List<TimestampedWeatherData> hourly) {
+public record LocationForecast(double latitude, double longitude, String timezone, String timezoneAbbr, int elevation, Geocoder.GeocodingEntry data, CurrentWeatherData current, List<TimestampedWeatherData> hourly) {
 
-    static final Gson GSON = new Gson();
-
-    public static void get(double latitude, double longitude, Consumer<LocationForecast> callback) {
+    public static void get(double latitude, double longitude, Geocoder.GeocodingEntry locationData, Consumer<LocationForecast> callback) {
         RequestUtils.fetchForecast(latitude, longitude, TimeZone.getDefault(), response -> {
             RawWeatherData rawData = GSON.fromJson(response, RawWeatherData.class);
 
@@ -46,7 +46,7 @@ public record LocationForecast(double latitude, double longitude, String timezon
                 forecastList.add(newEntry);
             }
 
-            LocationForecast forecast = new LocationForecast(latitude, longitude, rawData.timezone(), rawData.elevation(), "Town Name", currentWeatherData, forecastList);
+            LocationForecast forecast = new LocationForecast(latitude, longitude, rawData.timezone(), rawData.timezone_abbreviation(), rawData.elevation(), locationData, currentWeatherData, forecastList);
 
             Handler handler = new Handler(Looper.getMainLooper());
 

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
 import com.lorenzorogers.atmosphere.network.request.RequestBuilder;
 
 import java.io.IOException;
@@ -20,9 +21,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-
-// THIS MUST RUN ASYNC
 public class RequestUtils {
+
+    public static final Gson GSON = new Gson();
     public static final MediaType JSON = MediaType.get("application/json");
     static OkHttpClient client = new OkHttpClient();
 
@@ -69,6 +70,17 @@ public class RequestUtils {
                 .addParameter("current", "temperature_2m,is_day,apparent_temperature,relative_humidity_2m,precipitation,surface_pressure,wind_speed_10m")
                 .addParameter("timezone", timezoneDisplayName)
                 .build();
+        fetch(requestUrl, callback);
+    }
+
+    public static void fetchGeocoder(String query, Consumer<String> callback) {
+        String requestUrl = new RequestBuilder("https://geocoding-api.open-meteo.com/v1/search")
+                .addParameter("name", query)
+                .addParameter("count", "10")
+                .addParameter("language", "en")
+                .addParameter("format", "json")
+                .build();
+
         fetch(requestUrl, callback);
     }
 

@@ -8,25 +8,19 @@ import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import android.content.Intent;
-import android.view.View;
 import android.widget.ImageView;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.lorenzorogers.atmosphere.forecast.LocationForecast;
+import com.lorenzorogers.atmosphere.network.Geocoder;
 
 public class MainActivity extends AppCompatActivity {
-
-    private MediaPlayer mediaPlayer; // Declare mediaPlayer here to make it accessible to both methods
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
-        mediaPlayer = MediaPlayer.create(this, R.raw.morning);
-        mediaPlayer.setLooping(true); // loop the music
-        mediaPlayer.start();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -36,33 +30,28 @@ public class MainActivity extends AppCompatActivity {
 
         // Back button navigates to HomeActivity
         ImageView backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(intent);
         });
+        Geocoder.getFirst("Victoria", results -> {
+            LocationForecast.get(results.latitude(), results.longitude(), results, forecast -> {
+                TextView temperatureText = findViewById(R.id.temperatureText);
+                TextView windSpeedText = findViewById(R.id.windSpeed);
+                TextView visibilityText = findViewById(R.id.visibilityValue);
+                TextView apparentTempText = findViewById(R.id.apparentTempValue);
 
-        LocationForecast.get(48.42707924722373, -123.3645493928255, forecast -> {
-            TextView temperatureText = findViewById(R.id.temperatureText);
-            TextView windSpeedText = findViewById(R.id.windSpeed);
-            TextView visibilityText = findViewById(R.id.visibilityValue);
-            TextView apparentTempText = findViewById(R.id.apparentTempValue);
+                TextView cityNameText = findViewById(R.id.City);
+                TextView countryNameText = findViewById(R.id.Country);
 
-            temperatureText.setText(String.format("%s°", Math.round(forecast.current().temperature())));
-            windSpeedText.setText(String.format("%s km/h", forecast.current().windSpeed()));
-            visibilityText.setText(String.format("%s km", forecast.hourly().get(0).visibility() / 1000));
-            apparentTempText.setText(String.format("%s°", Math.round(forecast.current().apparentTemperature())));
+                temperatureText.setText(String.format("%s°", Math.round(forecast.current().temperature())));
+                windSpeedText.setText(String.format("%s km/h", forecast.current().windSpeed()));
+                visibilityText.setText(String.format("%s km", forecast.hourly().get(0).visibility() / 1000));
+                apparentTempText.setText(String.format("%s°", Math.round(forecast.current().apparentTemperature())));
+
+                cityNameText.setText(String.format("%s REMOVE TIMEZONE (%s)", results.name(), forecast.timezoneAbbr()));
+                countryNameText.setText(results.country());
+            });
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
     }
 }
