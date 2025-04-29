@@ -58,7 +58,7 @@
                     android:fontFamily="@font/intervariable"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="45sp" />
+                    android:textSize="44sp" />
 
                 <TextView
                     android:id="@+id/subtitleCard"
@@ -178,11 +178,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
+                tools:itemCount="6"
                 android:nestedScrollingEnabled="false"
                 android:clipToPadding="false"
                 tools:listitem="@layout/item_card" />
 
-            <!-- 🛠 Fixed GridLayout start and closed properly -->
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
