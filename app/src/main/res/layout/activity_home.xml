@@ -5,46 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".HomeActivity"
-    tools:ignore="HardcodedText">
-
-    <ImageView
-        android:id="@+id/formatBar"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:src="@drawable/arrow_back_24px"
-        app:tint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".HomeActivity">
 
     <!-- Scrollable Content -->
     <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="0dp"
+        android:id="@+id/scrollViewContent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/formatBar"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/copyright"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp">
 
-            <!-- Title Section -->
+            <!-- Top bar -->
+            <ImageView
+                android:id="@+id/formatBar"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:padding="8dp"
+                app:tint="@color/white" />
+
+            <!-- Title layout -->
             <LinearLayout
                 android:id="@+id/titleLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="12dp"
                 android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:gravity="center"
+                android:layout_marginTop="8dp">
 
                 <ImageView
                     android:id="@+id/icon"
@@ -62,65 +58,249 @@
                     android:fontFamily="@font/intervariable"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="45sp" />
+                    android:textSize="44sp" />
 
                 <TextView
                     android:id="@+id/subtitleCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="weather"
+                    android:textFontWeight="500"
                     android:fontFamily="@font/intervariable"
-                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:layoutGravity="top"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
-
             </LinearLayout>
 
+            <!-- Two-column grid layout for cards -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:orientation="horizontal"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false"
+                android:paddingTop="16dp"
+                android:rowCount="1"
+                android:useDefaultMargins="true">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/hereCard"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    app:cardBackgroundColor="@color/yellow"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/hereLocationIcon"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/location_on_24px"
+                            app:tint="@color/black" />
+
+                        <TextView
+                            android:id="@+id/hereLocationText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Here"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/hereLocationDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:text="Use location\nservices"
+                            android:textColor="@color/black"
+                            android:textFontWeight="600" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/homeCard"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    app:cardBackgroundColor="@color/lav"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/homeLocationIcon"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/home_pin_24px"
+                            app:tint="@color/black" />
+
+                        <TextView
+                            android:id="@+id/homeLocationText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Home"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/homeLocationDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:text="Set home location\nin settings"
+                            android:textColor="@color/black"
+                            android:textFontWeight="600" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </GridLayout>
+
+            <!-- RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@id/titleLayout"
-                app:layout_constraintBottom_toTopOf="@id/copyright"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingTop="16dp"
+                tools:itemCount="6"
+                android:nestedScrollingEnabled="false"
                 android:clipToPadding="false"
-                android:padding="16dp"
                 tools:listitem="@layout/item_card" />
 
-            <TextView
-                android:id="@+id/copyright"
-                android:layout_width="wrap_content"
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Copyright ©2025 Lorenzo Rogers and Michael Carpiano.\nAll rights reserved.\n\nWeather data provided by an open-source weather API,"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:ignore="NotSibling"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:paddingHorizontal="16dp"
-                android:layout_marginBottom="60dp"
-                android:gravity="center"/>
+                android:columnCount="2"
+                android:orientation="horizontal"
+                android:columnOrderPreserved="false"
+                android:alignmentMode="alignMargins"
+                android:useDefaultMargins="true"
+                android:paddingTop="16dp">
 
-            <TextView
-                android:id="@+id/copyrightLink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingHorizontal="16dp"
-                android:paddingBottom="0dp"
-                android:text="@string/openmeteoLink"
-                android:textColorLink="@color/blue"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/copyright"
-                tools:ignore="NotSibling" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/addCard"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    app:cardBackgroundColor="@color/lav"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="8dp">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/add_24px"
+                            app:tint="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add location"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:text="Add a new location\nmanually"
+                            android:textColor="@color/black"
+                            android:textFontWeight="600" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/settingsCard"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    app:cardBackgroundColor="@color/lav"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/settings_24px"
+                            app:tint="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Settings"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:text="Select app\npreferences"
+                            android:textColor="@color/black"
+                            android:textFontWeight="600" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </GridLayout>
+        </GridLayout>
     </ScrollView>
 
+    <!-- Footer -->
+    <TextView
+        android:id="@+id/copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="©2025 Lorenzo Rogers and Michael Carpiano.\nAll rights reserved.\nCheck out our weather provider,"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toTopOf="@id/copyrightLink"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/copyrightLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/openmeteoLink"
+        android:textSize="12sp"
+        android:textColor="@color/blue"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

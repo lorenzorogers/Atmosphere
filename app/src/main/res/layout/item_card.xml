@@ -1,51 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="160dp"
-    android:layout_height="120dp"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="8dp"
-    app:cardBackgroundColor="@color/material_dynamic_neutral70"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="8dp">
+    android:backgroundTint="@color/lav"
+    card_view:cardCornerRadius="16dp"
+    card_view:cardElevation="4dp">
 
-    <ImageView
-        android:id="@+id/moreOptions"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/more_vert_24px"
-        app:tint="@color/black"
-        android:padding="8dp"
-        android:layout_gravity="end"/>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/cardIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            tools:srcCompat="@drawable/language_24px"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
             android:src="@drawable/language_24px"
-            app:tint="@color/black"/>
+            card_view:tint="@color/black"/>
 
         <TextView
             android:id="@+id/cardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_toEndOf="@id/cardIcon"
+            tools:text="Fake Title"
+            android:layout_marginStart="12dp"
             android:text="Title"
-            android:textColor="@color/black"
-            android:textFontWeight="600" />
+            android:fontFamily="@font/intervariable"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/cardSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/cardTitle"
+            android:fontFamily="@font/intervariable"
+            android:layout_toEndOf="@id/cardIcon"
+            android:layout_marginStart="12dp"
             android:text="Subtitle"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            tools:text="Fake Subtitle"
+            android:textSize="14sp" />
 
+        <ImageView
+            android:id="@+id/moreOptions"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/more_vert_24px"
+            android:contentDescription="More options" />
+
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

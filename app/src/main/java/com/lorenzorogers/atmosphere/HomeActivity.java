@@ -2,90 +2,122 @@ package com.lorenzorogers.atmosphere;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import android.app.Dialog;
+import android.text.Editable;
+
+import android.text.TextWatcher;
+import android.widget.EditText;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private CardItemAdapter adapter;
-    private ArrayList<CardItem> cardItemList;
+    private List<CardItem> cardItemList;
+    private SearchResultAdapter searchResultAdapter;
+    private List<SearchResultItem> searchResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);  // Your layout with the RecyclerView
+        setContentView(R.layout.activity_home);
+
+        CardView addCard = findViewById(R.id.addCard);
+        addCard.setOnClickListener(v -> showSearchPopup());
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 columns
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        List<CardItem> cardItems = new ArrayList<>();
-        cardItems.add(new CardItem("Here", "Use location services", R.drawable.location_on_24px, false));
-        cardItems.add(new CardItem("Home", "Set home location in settings", R.drawable.home_pin_24px, false));
-        cardItems.add(new CardItem("Add location", "", R.drawable.add_24px, false));
-        cardItems.add(new CardItem("Settings", "", R.drawable.settings_24px, false));
+        cardItemList = new ArrayList<>();
+        cardItemList.add(new CardItem(1, "Victoria", "22°", R.drawable.language_24px, true));
+        cardItemList.add(new CardItem(2, "Toronto", "20°", R.drawable.language_24px, true));
 
-        CardItemAdapter adapter = new CardItemAdapter(cardItems);
+        adapter = new CardItemAdapter(cardItemList);
         recyclerView.setAdapter(adapter);
-// Attach drag-and-drop handler
-        ItemTouchHelper.Callback callback = new MyItemTouchHelperCallback(adapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
 
+        ItemTouchHelper.Callback callback = new MyItemTouchHelperCallback(adapter, cardItemList);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerView);
+    }
 
-        // Drag & drop logic with immovable card support
-        ItemTouchHelper.SimpleCallback c = new ItemTouchHelper.SimpleCallback(
-                ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
-                0) {
+    private void showSearchPopup() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.popup_search);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.show();
 
-            @Override
-            public boolean isLongPressDragEnabled() {
-                return true;
-            }
+        EditText searchEditText = dialog.findViewById(R.id.searchEditText);
+        ImageView searchIcon = dialog.findViewById(R.id.searchIcon);
+        TextView noResultsText = dialog.findViewById(R.id.noResultsText);
+        RecyclerView searchResultsRecyclerView = dialog.findViewById(R.id.recyclerViewSearchResults);
 
-            @Override
-            public boolean onMove(RecyclerView recyclerView,
-                                  RecyclerView.ViewHolder viewHolder,
-                                  RecyclerView.ViewHolder target) {
+        // Sample search result items for demonstration
+        List<SearchResultItem> defaultSearchResults = new ArrayList<>();
+        defaultSearchResults.add(new SearchResultItem("Victoria", "22°"));
+        defaultSearchResults.add(new SearchResultItem("Toronto", "20°"));
 
-                int fromPos = viewHolder.getAdapterPosition();
-                int toPos = target.getAdapterPosition();
+        // Adapter and RecyclerView setup
+        SearchResultAdapter searchResultAdapter = new SearchResultAdapter(defaultSearchResults);
+        searchResultsRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        searchResultsRecyclerView.setAdapter(searchResultAdapter);
 
-                if (!cardItemList.get(fromPos).isMovable() || !cardItemList.get(toPos).isMovable()) {
-                    return false;
-                }
-
-                boolean beforeFixed = toPos > 0 && !cardItemList.get(toPos - 1).isMovable();
-                boolean afterFixed = toPos < cardItemList.size() - 1 && !cardItemList.get(toPos + 1).isMovable();
-                if (beforeFixed && afterFixed) {
-                    return false;
-                }
-                Collections.swap(cardItemList, fromPos, toPos);
-                adapter.notifyItemMoved(fromPos, toPos);
-                return true;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                // Swipe disabled
-            }
-
-            @Override
-            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                int pos = viewHolder.getAdapterPosition();
-                if (!cardItemList.get(pos).isMovable()) {
-                    return 0;  // No movement allowed
-                }
-                return makeMovementFlags(
-                        ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
-                        0
-                );
+        // Update visibility based on search query (mocked logic)
+        Runnable mockSearch = () -> {
+            String query = searchEditText.getText().toString().trim();
+            if (query.isEmpty()) {
+                noResultsText.setVisibility(View.VISIBLE);
+                searchResultsRecyclerView.setVisibility(View.GONE);
+            } else {
+                noResultsText.setVisibility(View.GONE);
+                searchResultsRecyclerView.setVisibility(View.VISIBLE);
             }
         };
 
-        new ItemTouchHelper(callback).attachToRecyclerView(recyclerView);
+        searchIcon.setOnClickListener(v -> mockSearch.run());
+
+        searchEditText.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                    (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN)) {
+                mockSearch.run();
+                return true;
+            }
+            return false;
+        });
+
+        // TextWatcher for real-time search filtering
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                String query = charSequence.toString().toLowerCase();
+                List<SearchResultItem> filteredResults = new ArrayList<>();
+
+                // Filter based on the title
+                for (SearchResultItem item : defaultSearchResults) {
+                    if (item.getTitle().toLowerCase().contains(query)) {
+                        filteredResults.add(item);
+                    }
+                }
+
+                // Update the adapter with filtered results
+                searchResultAdapter.updateData(filteredResults);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
     }
 }

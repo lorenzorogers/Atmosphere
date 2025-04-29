@@ -21,12 +21,16 @@ public class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.CardIt
         this.cardItemList = cardItemList;
     }
 
+    public CardItem getItem(int position) {
+        return cardItemList.get(position);
+    }
+
     @NonNull
     @Override
     public CardItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_card, parent, false);
-        return new CardItemViewHolder(view);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_card, parent, false); // NOT card_item_layout!
+        return new CardItemViewHolder(itemView);
     }
 
     @Override
