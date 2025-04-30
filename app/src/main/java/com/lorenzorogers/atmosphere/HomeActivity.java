@@ -21,12 +21,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
     private CardItemAdapter adapter;
     private List<CardItem> cardItemList;
-    private SearchResultAdapter searchResultAdapter;
-    private List<SearchResultItem> searchResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +50,9 @@ public class HomeActivity extends AppCompatActivity {
     private void showSearchPopup() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.popup_search);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
         dialog.show();
 
         EditText searchEditText = dialog.findViewById(R.id.searchEditText);

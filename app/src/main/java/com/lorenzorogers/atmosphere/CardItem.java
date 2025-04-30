@@ -32,7 +32,7 @@ public class CardItem {
     }
 
     public boolean isMovable() {
-        return isMovable;
+        return !isMovable;
     }
 
     public void setMovable(boolean movable) {

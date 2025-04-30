@@ -17,16 +17,6 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public boolean isLongPressDragEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean isItemViewSwipeEnabled() {
-        return true;
-    }
-
-    @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
         int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
@@ -34,7 +24,7 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
         int position = viewHolder.getAdapterPosition();
         CardItem item = adapter.getItem(position);
 
-        if (!item.isMovable()) {
+        if (item.isMovable()) {
             dragFlags = 0; // Prevent movement
         }
 
@@ -50,7 +40,7 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
         int toPos = target.getAdapterPosition();
 
         // Prevent dragging to or between immovable cards
-        if (!cardItemList.get(toPos).isMovable()) return false;
+        if (cardItemList.get(toPos).isMovable()) return false;
 
         // Swap in data list
         CardItem fromItem = cardItemList.get(fromPos);
