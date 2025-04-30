@@ -1,8 +1,8 @@
 package com.lorenzorogers.atmosphere;
 
 public class SearchResultItem {
-    private String title;
-    private String subtitle;
+    private final String title;
+    private final String subtitle;
 
     public SearchResultItem(String title, String subtitle) {
         this.title = title;

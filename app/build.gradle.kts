@@ -29,7 +29,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    buildToolsVersion = "34.0.0"
+    //buildToolsVersion = "34.0.0"
 }
 
 dependencies {

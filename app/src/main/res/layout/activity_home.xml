@@ -68,7 +68,6 @@
                     android:textFontWeight="500"
                     android:fontFamily="@font/intervariable"
                     android:textAlignment="center"
-                    android:layoutGravity="top"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
             </LinearLayout>
