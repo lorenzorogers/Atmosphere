@@ -19,7 +19,7 @@
 
     <string name="title_uv_index">UV Index</string>
     <string name="desc_uv_index">Placeholder for UV data</string>
-    <string name="placeholder_uv_index">-</string>>
+    <string name="placeholder_uv_index">--</string>>
 
     <string name="title_pressure">Pressure</string>
     <string name="desc_pressure">Placeholder for pressure</string>
@@ -31,14 +31,24 @@
 
     <string name="title_precipitation">Precipitation</string>
     <string name="desc_precipitation">Placeholder for precipitation</string>
-    <string name="placeholder_precipitation">-- mm</string>>
+    <string name="placeholder_precipitation">-- mm</string>
+
+    <string name="title_air_pressure">Air Pressure</string>
+    <string name="desc_air_pressure">Placeholder for air pressure</string>
+    <string name="placeholder_air_pressure">-- hPa</string>
+
+    <string name="title_cloud_cover">Cloud Cover</string>
+    <string name="desc_cloud_cover">Placeholder for cloud cover</string>
+    <string name="placeholder_cloud_cover">-- %</string>
 
     <string name="app_bar_title">Weather Details</string>
     <string name="temperature">Temperature</string>
     <string name="fetch_tester">Fetch Tester</string>
 
     <string name="city_placeholder">--, --</string>
-    <string name="country_placeholder">-- (--)</string>
+    <string name="country_placeholder">--</string>
 
     <string name="openmeteoLink"><a href="https://open-meteo.com/">open-meteo.com</a></string>
+
+    <string name="appIconDescription">Atmosphere app icon; A sun and moon, arranged above each other so both are visible.</string>
 </resources>

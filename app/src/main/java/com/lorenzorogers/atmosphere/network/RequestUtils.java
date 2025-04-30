@@ -67,7 +67,7 @@ public class RequestUtils {
                 .addParameter("latitude", latitude)
                 .addParameter("longitude", longitude)
                 .addParameter("hourly", "temperature_2m,rain,wind_speed_10m,visibility,apparent_temperature,relative_humidity_2m,surface_pressure")
-                .addParameter("current", "temperature_2m,is_day,apparent_temperature,relative_humidity_2m,precipitation,surface_pressure,wind_speed_10m")
+                .addParameter("current", "temperature_2m,is_day,apparent_temperature,relative_humidity_2m,precipitation,surface_pressure,wind_speed_10m,cloud_cover")
                 .addParameter("timezone", timezoneDisplayName)
                 .build();
         fetch(requestUrl, callback);
