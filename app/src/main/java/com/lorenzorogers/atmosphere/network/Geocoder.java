@@ -7,7 +7,9 @@ import java.util.function.Consumer;
 
 public class Geocoder {
 
-    public static record GeocodingResults(List<GeocodingEntry> results) {}
+    public record GeocodingResults(List<GeocodingEntry> results) {
+    }
+
     public record GeocodingEntry(
             int id,
             String name,
@@ -24,13 +26,22 @@ public class Geocoder {
             String country,
             String admin1,
             String admin2
-    ) {}
+    ) {
+    }
 
     public static void getFirst(String query, Consumer<GeocodingEntry> results) {
         RequestUtils.fetchGeocoder(query, data -> {
             GeocodingResults rawData = GSON.fromJson(data, Geocoder.GeocodingResults.class);
 
             results.accept(rawData.results.get(0));
+        });
+    }
+
+    public static void get(String query, Consumer<GeocodingResults> results) {
+        RequestUtils.fetchGeocoder(query, data -> {
+            GeocodingResults rawData = GSON.fromJson(data, GeocodingResults.class);
+
+            results.accept(rawData);
         });
     }
 }
