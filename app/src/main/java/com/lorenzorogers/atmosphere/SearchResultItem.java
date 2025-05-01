@@ -7,13 +7,6 @@ public class SearchResultItem {
     private final Double latitude;
     private final Double longitude;
 
-    public SearchResultItem(String title, String subtitle) {
-        this.title = title;
-        this.subtitle = subtitle;
-        this.latitude = null;
-        this.longitude = null;
-    }
-
     public SearchResultItem(String title, String subtitle, double latitude, double longitude) {
         this.title = title;
         this.subtitle = subtitle;
@@ -38,6 +31,6 @@ public class SearchResultItem {
     }
 
     public boolean hasCoordinates() {
-        return latitude != null && longitude != null;
+        return true;
     }
 }
