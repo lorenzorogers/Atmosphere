@@ -1,5 +1,6 @@
 package com.lorenzorogers.atmosphere;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,13 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView titleText;
         TextView subtitleText;
+        TextView coordinatesText; // Added for displaying geo info
 
         public ViewHolder(View itemView) {
             super(itemView);
             titleText = itemView.findViewById(R.id.textViewSearchResultTitle);
             subtitleText = itemView.findViewById(R.id.textViewSearchResultSubtitle);
+            //coordinatesText = itemView.findViewById(R.id.textViewSearchResultCoordinates); // New TextView for coordinates
         }
     }
 
@@ -36,11 +39,20 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         return new ViewHolder(view);
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(@NonNull SearchResultAdapter.ViewHolder holder, int position) {
         SearchResultItem item = itemList.get(position);
         holder.titleText.setText(item.getTitle());
         holder.subtitleText.setText(item.getSubtitle());
+
+        // Display coordinates if available
+        if (item.hasCoordinates()) {
+            holder.coordinatesText.setVisibility(View.VISIBLE);
+            holder.coordinatesText.setText(String.format("Lat: %f, Lon: %f", item.getLatitude(), item.getLongitude()));
+        } else {
+            holder.coordinatesText.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -62,7 +74,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
             @Override
             public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                // Replace with a real check if you have unique IDs
                 return itemList.get(oldItemPosition).getTitle()
                         .equals(newList.get(newItemPosition).getTitle());
             }

@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import com.lorenzorogers.atmosphere.network.Geocoder;
+
 public class HomeActivity extends AppCompatActivity {
     private CardItemAdapter adapter;
     private List<CardItem> cardItemList;
@@ -47,6 +49,8 @@ public class HomeActivity extends AppCompatActivity {
         touchHelper.attachToRecyclerView(recyclerView);
     }
 
+    private static final int MAX_RESULTS = 5; // Add this near the top of the class
+
     private void showSearchPopup() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.popup_search);
@@ -60,17 +64,13 @@ public class HomeActivity extends AppCompatActivity {
         TextView noResultsText = dialog.findViewById(R.id.noResultsText);
         RecyclerView searchResultsRecyclerView = dialog.findViewById(R.id.recyclerViewSearchResults);
 
-        // Sample search result items for demonstration
+        // Initial dummy results (if needed for preview or placeholder)
         List<SearchResultItem> defaultSearchResults = new ArrayList<>();
-        defaultSearchResults.add(new SearchResultItem("Victoria", "22°"));
-        defaultSearchResults.add(new SearchResultItem("Toronto", "20°"));
 
-        // Adapter and RecyclerView setup
         SearchResultAdapter searchResultAdapter = new SearchResultAdapter(defaultSearchResults);
         searchResultsRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         searchResultsRecyclerView.setAdapter(searchResultAdapter);
 
-        // Update visibility based on search query (mocked logic)
         Runnable mockSearch = () -> {
             String query = searchEditText.getText().toString().trim();
             if (query.isEmpty()) {
@@ -93,25 +93,47 @@ public class HomeActivity extends AppCompatActivity {
             return false;
         });
 
-        // TextWatcher for real-time search filtering
+        // Replace this with live geocoding
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                String query = charSequence.toString().toLowerCase();
-                List<SearchResultItem> filteredResults = new ArrayList<>();
-
-                // Filter based on the title
-                for (SearchResultItem item : defaultSearchResults) {
-                    if (item.getTitle().toLowerCase().contains(query)) {
-                        filteredResults.add(item);
-                    }
+                String query = charSequence.toString().trim();
+                if (query.isEmpty()) {
+                    runOnUiThread(() -> {
+                        searchResultAdapter.updateData(new ArrayList<>());
+                        noResultsText.setVisibility(View.VISIBLE);
+                        searchResultsRecyclerView.setVisibility(View.GONE);
+                    });
+                    return;
                 }
 
-                // Update the adapter with filtered results
-                searchResultAdapter.updateData(filteredResults);
+                Geocoder.get(query, geocodingResults -> {
+                    List<Geocoder.GeocodingEntry> entries = geocodingResults.results();
+                    List<SearchResultItem> searchResults = new ArrayList<>();
+
+                    for (int i = 0; i < Math.min(entries.size(), MAX_RESULTS); i++) {
+                        Geocoder.GeocodingEntry entry = entries.get(i);
+                        String title = entry.name();
+                        String subtitle = entry.admin1() + ", " + entry.country();
+                        double lat = entry.latitude();
+                        double lon = entry.longitude();
+                        searchResults.add(new SearchResultItem(title, subtitle, lat, lon));
+                    }
+
+                    runOnUiThread(() -> {
+                        if (searchResults.isEmpty()) {
+                            noResultsText.setVisibility(View.VISIBLE);
+                            searchResultsRecyclerView.setVisibility(View.GONE);
+                        } else {
+                            noResultsText.setVisibility(View.GONE);
+                            searchResultsRecyclerView.setVisibility(View.VISIBLE);
+                            searchResultAdapter.updateData(searchResults);
+                        }
+                    });
+                });
             }
 
             @Override
