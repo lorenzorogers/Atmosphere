@@ -1,6 +1,5 @@
 package com.lorenzorogers.atmosphere;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+import java.util.Locale;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
 
@@ -39,7 +39,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         return new ViewHolder(view);
     }
 
-    @SuppressLint("DefaultLocale")
+
     @Override
     public void onBindViewHolder(@NonNull SearchResultAdapter.ViewHolder holder, int position) {
         SearchResultItem item = itemList.get(position);
@@ -49,7 +49,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         // Display coordinates if available
         if (item.hasCoordinates()) {
             holder.coordinatesText.setVisibility(View.VISIBLE);
-            holder.coordinatesText.setText(String.format("Lat: %f, Lon: %f", item.getLatitude(), item.getLongitude()));
+            holder.coordinatesText.setText(String.format(Locale.getDefault(), "Lat: %f, Lon: %f", item.getLatitude(), item.getLongitude()));
         } else {
             holder.coordinatesText.setVisibility(View.GONE);
         }

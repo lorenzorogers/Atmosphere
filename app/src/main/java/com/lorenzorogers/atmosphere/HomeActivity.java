@@ -23,8 +23,7 @@ import android.widget.TextView;
 import com.lorenzorogers.atmosphere.network.Geocoder;
 
 public class HomeActivity extends AppCompatActivity {
-    private CardItemAdapter adapter;
-    private List<CardItem> cardItemList;
+    private static final int MAX_RESULTS = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +36,17 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        cardItemList = new ArrayList<>();
+        List<CardItem> cardItemList = new ArrayList<>();
         cardItemList.add(new CardItem(1, "Victoria", "22°", R.drawable.language_24px, true));
         cardItemList.add(new CardItem(2, "Toronto", "20°", R.drawable.language_24px, true));
 
-        adapter = new CardItemAdapter(cardItemList);
+        CardItemAdapter adapter = new CardItemAdapter(cardItemList);
         recyclerView.setAdapter(adapter);
 
         ItemTouchHelper.Callback callback = new MyItemTouchHelperCallback(adapter, cardItemList);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
     }
-
-    private static final int MAX_RESULTS = 5; // Add this near the top of the class
 
     private void showSearchPopup() {
         Dialog dialog = new Dialog(this);
