@@ -1,6 +1,7 @@
 package com.lorenzorogers.atmosphere;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 apparentTempText.setText(String.format("%s°", Math.round(forecast.current().apparentTemperature())));
                 cloudCoverText.setText(String.format("%s %%", forecast.current().cloudCover()));
 
-                cityNameText.setText(String.format("%s REMOVE TIMEZONE (%s)", results.name(), forecast.timezoneAbbr()));
+                cityNameText.setText(String.format("%s", results.name()));
                 countryNameText.setText(results.country());
             });
         });

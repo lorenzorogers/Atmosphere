@@ -2,6 +2,9 @@ package com.lorenzorogers.atmosphere.network;
 
 import static com.lorenzorogers.atmosphere.network.RequestUtils.GSON;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -33,7 +36,9 @@ public class Geocoder {
         RequestUtils.fetchGeocoder(query, data -> {
             GeocodingResults rawData = GSON.fromJson(data, Geocoder.GeocodingResults.class);
 
-            results.accept(rawData.results.get(0));
+            Handler handler = new Handler(Looper.getMainLooper());
+            Runnable callbackRunnable = () -> results.accept(rawData.results.get(0));
+            handler.post(callbackRunnable);
         });
     }
 
