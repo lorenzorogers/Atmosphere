@@ -119,6 +119,7 @@
 
                 <!-- Wind Card -->
                 <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/atmosphere_light_100"
                     android:layout_width="160dp"
                     android:layout_height="120dp"
                     android:layout_margin="8dp"
@@ -276,6 +277,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/lavender"
                     android:layout_width="160dp"
                     android:layout_height="120dp"
                     android:layout_margin="8dp"

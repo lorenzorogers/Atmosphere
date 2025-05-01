@@ -34,19 +34,19 @@ public class HomeActivity extends AppCompatActivity {
         CardView addCard = findViewById(R.id.addCard);
         addCard.setOnClickListener(v -> showSearchPopup());
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        //RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        //recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         cardItemList = new ArrayList<>();
         cardItemList.add(new CardItem(1, "Victoria", "22°", R.drawable.language_24px, true));
         cardItemList.add(new CardItem(2, "Toronto", "20°", R.drawable.language_24px, true));
 
         adapter = new CardItemAdapter(cardItemList);
-        recyclerView.setAdapter(adapter);
+        //recyclerView.setAdapter(adapter);
 
         ItemTouchHelper.Callback callback = new MyItemTouchHelperCallback(adapter, cardItemList);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-        touchHelper.attachToRecyclerView(recyclerView);
+        //touchHelper.attachToRecyclerView(recyclerView);
     }
 
     private static final int MAX_RESULTS = 5; // Add this near the top of the class
@@ -70,24 +70,12 @@ public class HomeActivity extends AppCompatActivity {
         SearchResultAdapter searchResultAdapter = new SearchResultAdapter(defaultSearchResults);
         searchResultsRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         searchResultsRecyclerView.setAdapter(searchResultAdapter);
+        searchResultsRecyclerView.setVisibility(View.VISIBLE);
 
-        Runnable mockSearch = () -> {
-            String query = searchEditText.getText().toString().trim();
-            if (query.isEmpty()) {
-                noResultsText.setVisibility(View.VISIBLE);
-                searchResultsRecyclerView.setVisibility(View.GONE);
-            } else {
-                noResultsText.setVisibility(View.GONE);
-                searchResultsRecyclerView.setVisibility(View.VISIBLE);
-            }
-        };
-
-        searchIcon.setOnClickListener(v -> mockSearch.run());
 
         searchEditText.setOnEditorActionListener((textView, actionId, keyEvent) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                     (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN)) {
-                mockSearch.run();
                 return true;
             }
             return false;
@@ -105,34 +93,39 @@ public class HomeActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         searchResultAdapter.updateData(new ArrayList<>());
                         noResultsText.setVisibility(View.VISIBLE);
-                        searchResultsRecyclerView.setVisibility(View.GONE);
+                        //searchResultsRecyclerView.setVisibility(View.GONE);
                     });
                     return;
                 }
 
                 Geocoder.get(query, geocodingResults -> {
-                    List<Geocoder.GeocodingEntry> entries = geocodingResults.results();
-                    List<SearchResultItem> searchResults = new ArrayList<>();
+                        List<Geocoder.GeocodingEntry> entries = geocodingResults.results();
+                        List<SearchResultItem> searchResults = new ArrayList<>();
 
-                    for (int i = 0; i < Math.min(entries.size(), MAX_RESULTS); i++) {
-                        Geocoder.GeocodingEntry entry = entries.get(i);
-                        String title = entry.name();
-                        String subtitle = entry.admin1() + ", " + entry.country();
-                        double lat = entry.latitude();
-                        double lon = entry.longitude();
-                        searchResults.add(new SearchResultItem(title, subtitle, lat, lon));
-                    }
+                        for (int i = 0; i < Math.min(entries.size(), MAX_RESULTS); i++) {
+                            Geocoder.GeocodingEntry entry = entries.get(i);
+                            String title = entry.name();
+                            String subtitle = entry.admin1() + ", " + entry.country();
+                            double lat = entry.latitude();
+                            double lon = entry.longitude();
+                            searchResults.add(new SearchResultItem(title, subtitle, lat, lon));
 
-                    runOnUiThread(() -> {
-                        if (searchResults.isEmpty()) {
-                            noResultsText.setVisibility(View.VISIBLE);
-                            searchResultsRecyclerView.setVisibility(View.GONE);
-                        } else {
-                            noResultsText.setVisibility(View.GONE);
-                            searchResultsRecyclerView.setVisibility(View.VISIBLE);
-                            searchResultAdapter.updateData(searchResults);
                         }
-                    });
+
+                    //searchResultsRecyclerView.setVisibility(View.VISIBLE);
+                        searchResultAdapter.updateData(searchResults);
+
+                        /*runOnUiThread(() -> {
+                            if (searchResults.isEmpty()) {
+                                noResultsText.setVisibility(View.VISIBLE);
+                                searchResultsRecyclerView.setVisibility(View.GONE);
+                            } else {
+                                noResultsText.setVisibility(View.GONE);
+                                searchResultsRecyclerView.setVisibility(View.VISIBLE);
+                                searchResultAdapter.updateData(searchResults);
+                            }
+
+                        }); */
                 });
             }
 
