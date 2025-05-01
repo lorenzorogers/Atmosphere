@@ -19,7 +19,19 @@
     <color name="twilight">#05409f</color>
     <color name="purple">#842cf8</color>
     <color name="violet">#5c08d9</color>
-    <color name="lightsteelblue">#b0c4de</color>
-    <color name="lightteal">#90e4c1</color>
-    <color name="lav">#d099e2</color>
+    <color name="lightSteelBlue">#b0c4de</color>
+    <color name="lightTeal">#90e4c1</color>
+    <color name="lavender">#d099e2</color>
+
+    <color name="atmosphere_light_50">#f6f8f9</color>
+    <color name="atmosphere_light_100">#ebf0f3</color>
+    <color name="atmosphere_light_200">#d3dee4</color>
+    <color name="atmosphere_light_300">#bdced6</color>
+    <color name="atmosphere_light_400">#81a1af</color>
+    <color name="atmosphere_light_500">#618696</color>
+    <color name="atmosphere_light_600">#4c6c7d</color>
+    <color name="atmosphere_light_700">#3f5865</color>
+    <color name="atmosphere_light_800">#374b55</color>
+    <color name="atmosphere_light_900">#314049</color>
+    <color name="atmosphere_light_950">#212a30</color>
 </resources>

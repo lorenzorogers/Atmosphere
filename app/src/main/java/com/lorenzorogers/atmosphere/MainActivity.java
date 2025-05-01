@@ -2,7 +2,7 @@ package com.lorenzorogers.atmosphere;
 
 import android.os.Bundle;
 import android.widget.TextView;
-import android.media.MediaPlayer;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
@@ -36,18 +36,20 @@ public class MainActivity extends AppCompatActivity {
         });
         Geocoder.getFirst("Victoria", results -> {
             LocationForecast.get(results.latitude(), results.longitude(), results, forecast -> {
-                TextView temperatureText = findViewById(R.id.temperatureText);
-                TextView windSpeedText = findViewById(R.id.windSpeed);
+                TextView temperatureText = findViewById(R.id.temperatureValue);
+                TextView windSpeedText = findViewById(R.id.windSpeedValue);
                 TextView visibilityText = findViewById(R.id.visibilityValue);
                 TextView apparentTempText = findViewById(R.id.apparentTempValue);
+                TextView cloudCoverText = findViewById(R.id.cloudCoverValue);
 
-                TextView cityNameText = findViewById(R.id.City);
-                TextView countryNameText = findViewById(R.id.Country);
+                TextView cityNameText = findViewById(R.id.cityValue);
+                TextView countryNameText = findViewById(R.id.countryValue);
 
                 temperatureText.setText(String.format("%s°", Math.round(forecast.current().temperature())));
                 windSpeedText.setText(String.format("%s km/h", forecast.current().windSpeed()));
                 visibilityText.setText(String.format("%s km", forecast.hourly().get(0).visibility() / 1000));
                 apparentTempText.setText(String.format("%s°", Math.round(forecast.current().apparentTemperature())));
+                cloudCoverText.setText(String.format("%s %%", forecast.current().cloudCover()));
 
                 cityNameText.setText(String.format("%s REMOVE TIMEZONE (%s)", results.name(), forecast.timezoneAbbr()));
                 countryNameText.setText(results.country());

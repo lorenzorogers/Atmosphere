@@ -28,7 +28,8 @@ public record LocationForecast(double latitude, double longitude, String timezon
                     rawData.current().relative_humidity_2m(),
                     rawData.current().precipitation(),
                     rawData.current().surface_pressure(),
-                    rawData.current().wind_speed_10m()
+                    rawData.current().wind_speed_10m(),
+                    rawData.current().cloud_cover()
             );
 
             ArrayList<TimestampedWeatherData> forecastList = new ArrayList<>();
@@ -57,5 +58,5 @@ public record LocationForecast(double latitude, double longitude, String timezon
     }
 
     public record TimestampedWeatherData(float temperature, float rain, float windSpeed, int visibility, float apparentTemperature, float relativeHumidity, float surfacePressure, LocalDateTime time) {}
-    public record CurrentWeatherData(float temperature, boolean isDay, float apparentTemperature, int relativeHumidity, float precipitation, float surfacePressure, float windSpeed) {}
+    public record CurrentWeatherData(float temperature, boolean isDay, float apparentTemperature, int relativeHumidity, float precipitation, float surfacePressure, float windSpeed, int cloudCover) {}
 }
