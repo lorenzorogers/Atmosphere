@@ -5,6 +5,7 @@ import static com.lorenzorogers.atmosphere.network.RequestUtils.GSON;
 import android.os.Handler;
 import android.os.Looper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -45,8 +46,11 @@ public class Geocoder {
     public static void get(String query, Consumer<GeocodingResults> results) {
         RequestUtils.fetchGeocoder(query, data -> {
             GeocodingResults rawData = GSON.fromJson(data, GeocodingResults.class);
+            GeocodingResults emptyData = new GeocodingResults(new ArrayList<>());
 
-            results.accept(rawData);
+            Handler handler = new Handler(Looper.getMainLooper());
+            Runnable callbackRunnable = () -> results.accept(rawData.results() != null ? rawData : emptyData);
+            handler.post(callbackRunnable);
         });
     }
 }

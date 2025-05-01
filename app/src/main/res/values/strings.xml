@@ -51,4 +51,5 @@
     <string name="openmeteoLink"><a href="https://open-meteo.com/">open-meteo.com</a></string>
 
     <string name="appIconDescription">Atmosphere app icon; A sun and moon, arranged above each other so both are visible.</string>
+    <string name="activityHomeRecyclerViewContentDesc">Your personal weather locations</string>
 </resources>
