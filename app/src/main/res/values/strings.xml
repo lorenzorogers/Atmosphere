@@ -48,7 +48,7 @@
     <string name="city_placeholder">--, --</string>
     <string name="country_placeholder">--</string>
 
-    <string name="openmeteoLink"><a href="https://open-meteo.com/">open-meteo.com</a></string>
+    <string name="openmeteoLink">https://open-meteo.com</string>
 
     <string name="appIconDescription">Atmosphere app icon; A sun and moon, arranged above each other so both are visible.</string>
     <string name="activityHomeRecyclerViewContentDesc">Your personal weather locations</string>

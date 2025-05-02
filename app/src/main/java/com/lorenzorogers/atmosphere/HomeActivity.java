@@ -31,6 +31,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        Link.makeTextViewLink(this, "copyrightLink");
+
         TextView unitToggleText = findViewById(R.id.unitToggleText);
         CardView settingsCard = findViewById(R.id.settingsCard);
 

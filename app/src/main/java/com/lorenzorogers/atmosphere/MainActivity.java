@@ -47,10 +47,18 @@ public class MainActivity extends AppCompatActivity {
                 TextView cityNameText = findViewById(R.id.cityValue);
                 TextView countryNameText = findViewById(R.id.countryValue);
 
-                temperatureText.setText(String.format("%s°", Math.round(forecast.current().temperature())));
-                windSpeedText.setText(String.format("%s km/h", forecast.current().windSpeed()));
+                if (isCelsius){
+                    temperatureText.setText(String.format("%s°", Math.round(forecast.current().temperature())));
+                }else{
+                    temperatureText.setText(String.format("%s°", Math.round((forecast.current().temperature()*9/5) + 32)));
+                }
+                windSpeedText.setText(String.format("%s km/h", (int)forecast.current().windSpeed()));
                 visibilityText.setText(String.format("%s km", forecast.hourly().get(0).visibility() / 1000));
-                apparentTempText.setText(String.format("%s°", Math.round(forecast.current().apparentTemperature())));
+                if (isCelsius) {
+                    apparentTempText.setText(String.format("%s°", Math.round(forecast.current().apparentTemperature())));
+                }else{
+                    apparentTempText.setText(String.format("%s°", Math.round((forecast.current().apparentTemperature()*9/5)+32)));
+                }
                 cloudCoverText.setText(String.format("%s %%", forecast.current().cloudCover()));
 
                 cityNameText.setText(String.format("%s", results.name()));
