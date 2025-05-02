@@ -171,8 +171,8 @@
                 </androidx.cardview.widget.CardView>
             </GridLayout>
 
-            <!-- RecyclerView -->
-            <!--<androidx.recyclerview.widget.RecyclerView
+            <!-- RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -251,13 +251,14 @@
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:src="@drawable/settings_24px"
+                            android:src="@drawable/device_thermostat_24px"
                             app:tint="@color/black" />
 
                         <TextView
+                            android:id="@+id/unitToggleText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Settings"
+                            android:text="°C/°F"
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -267,7 +268,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:textSize="12sp"
-                            android:text="Select app\npreferences"
+                            android:text="Toggle temperature\nunits"
                             android:textColor="@color/black"
                             android:textFontWeight="600" />
                     </LinearLayout>

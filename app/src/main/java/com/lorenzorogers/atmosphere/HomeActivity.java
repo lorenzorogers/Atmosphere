@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
+import android.content.SharedPreferences;
 import android.app.Dialog;
 import android.text.Editable;
 
@@ -29,6 +30,23 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        TextView unitToggleText = findViewById(R.id.unitToggleText);
+        CardView settingsCard = findViewById(R.id.settingsCard);
+
+        SharedPreferences prefs = getSharedPreferences("AppSettings", MODE_PRIVATE);
+        final boolean[] isCelsius = { prefs.getBoolean("isCelsius", true) };
+
+        unitToggleText.setText(isCelsius[0] ? "°C" : "°F");
+
+        settingsCard.setOnClickListener(v -> {
+            isCelsius[0] = !isCelsius[0];
+            unitToggleText.setText(isCelsius[0] ? "°C" : "°F");
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("isCelsius", isCelsius[0]);
+            editor.apply();
+        });
 
         CardView addCard = findViewById(R.id.addCard);
         addCard.setOnClickListener(v -> showSearchPopup());
