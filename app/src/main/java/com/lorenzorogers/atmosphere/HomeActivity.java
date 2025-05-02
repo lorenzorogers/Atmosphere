@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
+import android.content.SharedPreferences;
 import android.app.Dialog;
 import android.text.Editable;
 
@@ -30,22 +31,39 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        TextView unitToggleText = findViewById(R.id.unitToggleText);
+        CardView settingsCard = findViewById(R.id.settingsCard);
+
+        SharedPreferences prefs = getSharedPreferences("AppSettings", MODE_PRIVATE);
+        final boolean[] isCelsius = { prefs.getBoolean("isCelsius", true) };
+
+        unitToggleText.setText(isCelsius[0] ? "°C" : "°F");
+
+        settingsCard.setOnClickListener(v -> {
+            isCelsius[0] = !isCelsius[0];
+            unitToggleText.setText(isCelsius[0] ? "°C" : "°F");
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("isCelsius", isCelsius[0]);
+            editor.apply();
+        });
+
         CardView addCard = findViewById(R.id.addCard);
         addCard.setOnClickListener(v -> showSearchPopup());
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        //RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        //recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         List<CardItem> cardItemList = new ArrayList<>();
         cardItemList.add(new CardItem(1, "Victoria", "22°", R.drawable.language_24px, true));
         cardItemList.add(new CardItem(2, "Toronto", "20°", R.drawable.language_24px, true));
 
         CardItemAdapter adapter = new CardItemAdapter(cardItemList);
-        recyclerView.setAdapter(adapter);
+        //recyclerView.setAdapter(adapter);
 
         ItemTouchHelper.Callback callback = new MyItemTouchHelperCallback(adapter, cardItemList);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-        touchHelper.attachToRecyclerView(recyclerView);
+        //touchHelper.attachToRecyclerView(recyclerView);
     }
 
     private void showSearchPopup() {
