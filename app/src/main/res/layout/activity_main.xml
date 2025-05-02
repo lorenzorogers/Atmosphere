@@ -137,14 +137,14 @@
                             android:layout_height="32dp"
                             android:contentDescription="Illustration of gusts of wind"
                             android:src="@drawable/air_24px"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_light_950" />
 
                         <TextView
                             android:id="@+id/windSpeedValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/placeholder_wind_speed"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_light_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -152,13 +152,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/title_wind_speed"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_light_950"
                             android:textFontWeight="600" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <!-- Humidity Card -->
                 <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/atmosphere_blue_100"
                     android:layout_width="160dp"
                     android:layout_height="120dp"
                     android:layout_margin="8dp"
@@ -176,14 +177,14 @@
                             android:layout_height="32dp"
                             android:contentDescription="Illustration of individual raindrop"
                             android:src="@drawable/humidity_low_24px"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_blue_950" />
 
                         <TextView
                             android:id="@+id/humidityValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/placeholder_humidity"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_blue_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -191,19 +192,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/title_humidity"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_blue_950"
                             android:textFontWeight="600" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <!-- Apparent Temp Card -->
                 <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/atmosphere_yellow_100"
                     android:layout_width="160dp"
                     android:layout_height="120dp"
                     android:layout_margin="8dp"
                     app:cardCornerRadius="16dp">
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -215,14 +218,14 @@
                             android:layout_height="32dp"
                             android:contentDescription="Illustration of thermometer"
                             android:src="@drawable/device_thermostat_24px"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_yellow_950" />
 
                         <TextView
                             android:id="@+id/apparentTempValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/placeholder_apparent_temperature"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_yellow_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -231,7 +234,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/title_apparent_temperature"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_yellow_950"
                             android:textFontWeight="600" />
                     </LinearLayout>
 
@@ -239,6 +242,7 @@
 
                 <!-- Visibility Card -->
                 <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/atmosphere_green_100"
                     android:layout_width="160dp"
                     android:layout_height="120dp"
                     android:layout_margin="8dp"
@@ -256,14 +260,14 @@
                             android:layout_height="32dp"
                             android:contentDescription="Illustration of mountain range"
                             android:src="@drawable/landscape_24px"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_green_950" />
 
                         <TextView
                             android:id="@+id/visibilityValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/placeholder_visibility"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_green_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -271,13 +275,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/title_visibility"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_green_950"
                             android:textFontWeight="600" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    app:cardBackgroundColor="@color/lavender"
+                    app:cardBackgroundColor="@color/atmosphere_orange_100"
                     android:layout_width="160dp"
                     android:layout_height="120dp"
                     android:layout_margin="8dp"
@@ -295,14 +299,14 @@
                             android:layout_height="32dp"
                             android:contentDescription="Illustration of sun"
                             android:src="@drawable/brightness_5_24px"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_orange_950" />
 
                         <TextView
                             android:id="@+id/uvIndexValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/placeholder_uv_index"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_orange_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -310,12 +314,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="UV Index"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_orange_950"
                             android:textFontWeight="600" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/atmosphere_purple_100"
                     android:layout_width="160dp"
                     android:layout_height="120dp"
                     android:layout_margin="8dp"
@@ -333,14 +338,14 @@
                             android:layout_height="32dp"
                             android:contentDescription="Illustration of many raindrops"
                             android:src="@drawable/rainy_light_24px"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_purple_950" />
 
                         <TextView
                             android:id="@+id/precipitationValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/placeholder_precipitation"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_purple_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -348,7 +353,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/title_precipitation"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_purple_950"
                             android:textFontWeight="600" />
 
                     </LinearLayout>
@@ -356,6 +361,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/atmosphere_teal_100"
                     android:layout_width="160dp"
                     android:layout_height="120dp"
                     android:layout_margin="8dp"
@@ -373,14 +379,14 @@
                             android:layout_height="32dp"
                             android:contentDescription="Illustration of a measurement gauge"
                             android:src="@drawable/speed_24px"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_teal_950" />
 
                         <TextView
                             android:id="@+id/airPressureValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/placeholder_air_pressure"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_teal_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -388,7 +394,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/title_air_pressure"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_teal_950"
                             android:textFontWeight="600" />
 
                     </LinearLayout>
@@ -396,6 +402,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/atmosphere_red_100"
                     android:layout_width="160dp"
                     android:layout_height="120dp"
                     android:layout_margin="8dp"
@@ -413,14 +420,14 @@
                             android:layout_height="32dp"
                             android:contentDescription="Illustration of single cloud"
                             android:src="@drawable/cloud_24px"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_red_950" />
 
                         <TextView
                             android:id="@+id/cloudCoverValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/placeholder_cloud_cover"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_red_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -428,7 +435,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/title_cloud_cover"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_red_950"
                             android:textFontWeight="600" />
 
                     </LinearLayout>

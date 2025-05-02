@@ -34,4 +34,88 @@
     <color name="atmosphere_light_800">#374b55</color>
     <color name="atmosphere_light_900">#314049</color>
     <color name="atmosphere_light_950">#212a30</color>
+
+    <color name="atmosphere_red_50">#fef1f8</color>
+    <color name="atmosphere_red_100">#fee5f3</color>
+    <color name="atmosphere_red_200">#ffcaea</color>
+    <color name="atmosphere_red_300">#ffa0d6</color>
+    <color name="atmosphere_red_400">#ff64b9</color>
+    <color name="atmosphere_red_500">#fd379c</color>
+    <color name="atmosphere_red_600">#ee1478</color>
+    <color name="atmosphere_red_700">#da0762</color>
+    <color name="atmosphere_red_800">#ab094d</color>
+    <color name="atmosphere_red_900">#8e0d43</color>
+    <color name="atmosphere_red_950">#580023</color>
+
+    <color name="atmosphere_orange_50">#fff5ed</color>
+    <color name="atmosphere_orange_100">#fee9d6</color>
+    <color name="atmosphere_orange_200">#fdcfab</color>
+    <color name="atmosphere_orange_300">#fbae76</color>
+    <color name="atmosphere_orange_400">#f8752c</color>
+    <color name="atmosphere_orange_500">#f66019</color>
+    <color name="atmosphere_orange_600">#e7450f</color>
+    <color name="atmosphere_orange_700">#c0320e</color>
+    <color name="atmosphere_orange_800">#982914</color>
+    <color name="atmosphere_orange_900">#7b2413</color>
+    <color name="atmosphere_orange_950">#420f08</color>
+
+    <color name="atmosphere_yellow_50">#fffaeb</color>
+    <color name="atmosphere_yellow_100">#fef0c7</color>
+    <color name="atmosphere_yellow_200">#fce08b</color>
+    <color name="atmosphere_yellow_300">#fbc94e</color>
+    <color name="atmosphere_yellow_400">#fab325</color>
+    <color name="atmosphere_yellow_500">#f3920d</color>
+    <color name="atmosphere_yellow_600">#e77408</color>
+    <color name="atmosphere_yellow_700">#b34a0a</color>
+    <color name="atmosphere_yellow_800">#91390f</color>
+    <color name="atmosphere_yellow_900">#773010</color>
+    <color name="atmosphere_yellow_950">#451703</color>
+
+    <color name="atmosphere_green_50">#f2f7f4</color>
+    <color name="atmosphere_green_100">#dfece2</color>
+    <color name="atmosphere_green_200">#c0dac9</color>
+    <color name="atmosphere_green_300">#96bfa7</color>
+    <color name="atmosphere_green_400">#76a78b</color>
+    <color name="atmosphere_green_500">#488162</color>
+    <color name="atmosphere_green_600">#35664d</color>
+    <color name="atmosphere_green_700">#2a523e</color>
+    <color name="atmosphere_green_800">#234233</color>
+    <color name="atmosphere_green_900">#1e362b</color>
+    <color name="atmosphere_green_950">#101e18</color>
+
+    <color name="atmosphere_teal_50">#f3faf8</color>
+    <color name="atmosphere_teal_100">#d7f0ec</color>
+    <color name="atmosphere_teal_200">#afe0da</color>
+    <color name="atmosphere_teal_300">#7fc9c1</color>
+    <color name="atmosphere_teal_400">#54ada6</color>
+    <color name="atmosphere_teal_500">#3b918d</color>
+    <color name="atmosphere_teal_600">#2d7472</color>
+    <color name="atmosphere_teal_700">#275e5c</color>
+    <color name="atmosphere_teal_800">#234c4b</color>
+    <color name="atmosphere_teal_900">#214040</color>
+    <color name="atmosphere_teal_950">#143334</color>
+
+    <color name="atmosphere_blue_50">#eff4ff</color>
+    <color name="atmosphere_blue_100">#dbe5fe</color>
+    <color name="atmosphere_blue_200">#bed2ff</color>
+    <color name="atmosphere_blue_300">#92b6fe</color>
+    <color name="atmosphere_blue_400">#5e8ffc</color>
+    <color name="atmosphere_blue_500">#2c5df8</color>
+    <color name="atmosphere_blue_600">#2246ee</color>
+    <color name="atmosphere_blue_700">#1b32da</color>
+    <color name="atmosphere_blue_800">#1c2ab1</color>
+    <color name="atmosphere_blue_900">#1d2a8b</color>
+    <color name="atmosphere_blue_950">#161c55</color>
+
+    <color name="atmosphere_purple_50">#f4f1ff</color>
+    <color name="atmosphere_purple_100">#ebe5ff</color>
+    <color name="atmosphere_purple_200">#dacfff</color>
+    <color name="atmosphere_purple_300">#bea9ff</color>
+    <color name="atmosphere_purple_400">#a078ff</color>
+    <color name="atmosphere_purple_500">#8342ff</color>
+    <color name="atmosphere_purple_600">#771cff</color>
+    <color name="atmosphere_purple_700">#690af7</color>
+    <color name="atmosphere_purple_800">#5c08d9</color>
+    <color name="atmosphere_purple_900">#4a09a9</color>
+    <color name="atmosphere_purple_950">#2b0273</color>
 </resources>
