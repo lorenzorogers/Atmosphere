@@ -18,18 +18,17 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-        int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-        int swipeFlags = 0; // Swipe not used
-
         int position = viewHolder.getAdapterPosition();
-        CardItem item = adapter.getItem(position);
-
-        // Disable movement if item is NOT movable
-        if (!item.isMovable()) {
-            dragFlags = 0;
+        if (position < 0 || position >= adapter.getItemCount()) {
+            return makeMovementFlags(0, 0); // No movement if position invalid
         }
 
-        return makeMovementFlags(dragFlags, swipeFlags);
+        CardItem item = adapter.getItem(position);
+        int dragFlags = (item != null && item.isMovable())
+                ? ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT
+                : 0;
+
+        return makeMovementFlags(dragFlags, 0); // Swipe not used
     }
 
     @Override
@@ -39,6 +38,10 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
         int fromPos = viewHolder.getAdapterPosition();
         int toPos = target.getAdapterPosition();
+
+        if (fromPos < 0 || toPos < 0 || fromPos >= adapter.getItemCount() || toPos >= adapter.getItemCount()) {
+            return false; // Don't crash on bad positions
+        }
 
         Collections.swap(adapter.getCardItems(), fromPos, toPos);
         adapter.notifyItemMoved(fromPos, toPos);
@@ -51,6 +54,6 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-        // Swipe is disabled, so this is unused
+        // Swipe disabled
     }
 }
