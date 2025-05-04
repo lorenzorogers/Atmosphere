@@ -1,22 +1,16 @@
 package com.lorenzorogers.atmosphere;
 
 public class CardItem {
-    private int imageResId;
-    private String title;
-    private String subtitle;
-    private int resIcon;
+    private final String title;
+    private final String subtitle;
+    private final int resIcon;
     private boolean isMovable;
 
-    public CardItem(int imageResId, String title, String subtitle, int resIcon, boolean isMovable) {
-        this.imageResId = imageResId;
+    public CardItem(String title, String subtitle, int resIcon, boolean isMovable) {
         this.title = title;
-        this.subtitle= subtitle;
+        this.subtitle = subtitle;
         this.resIcon = resIcon;
         this.isMovable = isMovable;
-    }
-
-    public int getIconResId() {
-        return imageResId;
     }
 
     public String getTitle() {
@@ -32,10 +26,6 @@ public class CardItem {
     }
 
     public boolean isMovable() {
-        return !isMovable;
-    }
-
-    public void setMovable(boolean movable) {
-        isMovable = movable;
+        return isMovable;
     }
 }

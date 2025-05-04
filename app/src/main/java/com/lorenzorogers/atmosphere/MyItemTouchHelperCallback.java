@@ -4,28 +4,29 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.Collections;
 
 public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     private final CardItemAdapter adapter;
-    private final List<CardItem> cardItemList;
+    private final HomeActivity activity;
 
-    public MyItemTouchHelperCallback(CardItemAdapter adapter, List<CardItem> cardItemList) {
+    public MyItemTouchHelperCallback(CardItemAdapter adapter, HomeActivity activity) {
         this.adapter = adapter;
-        this.cardItemList = cardItemList;
+        this.activity = activity;
     }
 
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-        int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+        int swipeFlags = 0; // Swipe not used
 
         int position = viewHolder.getAdapterPosition();
         CardItem item = adapter.getItem(position);
 
-        if (item.isMovable()) {
-            dragFlags = 0; // Prevent movement
+        // Disable movement if item is NOT movable
+        if (!item.isMovable()) {
+            dragFlags = 0;
         }
 
         return makeMovementFlags(dragFlags, swipeFlags);
@@ -39,21 +40,17 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
         int fromPos = viewHolder.getAdapterPosition();
         int toPos = target.getAdapterPosition();
 
-        // Prevent dragging to or between immovable cards
-        if (cardItemList.get(toPos).isMovable()) return false;
-
-        // Swap in data list
-        CardItem fromItem = cardItemList.get(fromPos);
-        cardItemList.remove(fromPos);
-        cardItemList.add(toPos, fromItem);
-
-        // Notify adapter
+        Collections.swap(adapter.getCardItems(), fromPos, toPos);
         adapter.notifyItemMoved(fromPos, toPos);
+
+        // Save the new list order
+        activity.saveCardList(adapter.getCardItems());
+
         return true;
     }
 
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-        // Not used
+        // Swipe is disabled, so this is unused
     }
 }
