@@ -15,9 +15,6 @@
         android:theme="@style/Theme.Atmosphere"
         tools:targetApi="31">
         <activity
-            android:name=".Settings"
-            android:exported="false" />
-        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
