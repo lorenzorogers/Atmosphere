@@ -155,7 +155,7 @@
                             android:layout_height="wrap_content"
                             android:text="Home"
                             android:textColor="@color/black"
-                            android:textSize="13sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -164,7 +164,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:textSize="12sp"
-                            android:text="Set home to your\ncurrent location"
+                            android:text="Long press to set home\nto your current location"
                             android:textColor="@color/black"
                             android:textFontWeight="600" />
                     </LinearLayout>

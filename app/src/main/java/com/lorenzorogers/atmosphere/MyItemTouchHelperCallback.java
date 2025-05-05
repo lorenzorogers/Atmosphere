@@ -1,6 +1,10 @@
 package com.lorenzorogers.atmosphere;
 
+import android.view.HapticFeedbackConstants;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,7 +57,32 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
+    public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
+        super.onSelectedChanged(viewHolder, actionState);
+
+        if (actionState == ItemTouchHelper.ACTION_STATE_DRAG && viewHolder != null) {
+            // Log to verify drag start
+            viewHolder.itemView.setElevation(20f);
+            viewHolder.itemView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            Log.d("MyItemTouchHelper", "Drag started, providing haptic feedback");
+
+            // Check if the item can provide haptic feedback
+            if (viewHolder.itemView.isHapticFeedbackEnabled()) {
+                viewHolder.itemView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            } else {
+                Log.w("MyItemTouchHelper", "Haptic feedback is not enabled");
+            }
+        }
+    }
+
+    @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         // Swipe disabled
     }
+
+    public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+        super.clearView(recyclerView, viewHolder);
+        viewHolder.itemView.setElevation(12f);
+    }
+
 }

@@ -4,7 +4,7 @@ public class CardItem {
     private final String title;
     private final String subtitle;
     private final int resIcon;
-    private boolean isMovable;
+    private final boolean isMovable;
 
     public CardItem(String title, String subtitle, int resIcon, boolean isMovable) {
         this.title = title;

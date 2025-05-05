@@ -1,5 +1,7 @@
 package com.lorenzorogers.atmosphere;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -7,16 +9,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.SharedPreferences;
-import android.app.Dialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.app.Dialog;
 import android.view.inputmethod.EditorInfo;
 
 import com.google.gson.Gson;
@@ -30,7 +32,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "card_prefs";
     private static final String CARD_LIST_KEY = "card_list";
-    private static final int MAX_RESULTS = 5;  // Limit the number of search results
+    private static final int MAX_RESULTS = 5;
 
     public void saveCardList(List<CardItem> list) {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -53,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
             return gson.fromJson(json, type);
         }
 
-        return new ArrayList<>(); // fallback to an empty list
+        return new ArrayList<>();
     }
 
     @Override
@@ -61,28 +63,76 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Load the list of cards
+        Link.makeTextViewLink(this, "copyrightLink");
+
         List<CardItem> cardList = loadCardList();
         if (cardList.isEmpty()) {
-            // Default data if nothing is loaded
             cardList.add(new CardItem("Victoria", "22°", R.drawable.language_24px, true));
             cardList.add(new CardItem("Toronto", "20°", R.drawable.language_24px, true));
         }
 
-        // Set up RecyclerView
+        TextView unitToggleText = findViewById(R.id.unitToggleText);
+        CardView settingsCard = findViewById(R.id.unitCard);
+
+        SharedPreferences prefs = getSharedPreferences("AppSettings", MODE_PRIVATE);
+        final boolean[] isCelsius = { prefs.getBoolean("isCelsius", true) };
+
+        unitToggleText.setText(isCelsius[0] ? "°C" : "°F");
+
+        settingsCard.setOnClickListener(v -> {
+            isCelsius[0] = !isCelsius[0];
+            unitToggleText.setText(isCelsius[0] ? "°C/km" : "°F/miles");
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("isCelsius", isCelsius[0]);
+            editor.apply(); // Commit the new value — no need to immediately re-read it
+        });
+
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+        recyclerView.setTranslationZ(100f);
+
         CardItemAdapter adapter = new CardItemAdapter(cardList);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(adapter);
 
-        // Enable drag-and-drop functionality
         ItemTouchHelper.Callback callback = new MyItemTouchHelperCallback(adapter, this);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
 
-        // Handle the search box popup
         CardView addCard = findViewById(R.id.addCard);
         addCard.setOnClickListener(v -> showSearchPopup());
+
+        // "Here" card functionality (shows current location data)
+        CardView hereCard = findViewById(R.id.hereCard);
+        hereCard.setOnClickListener(v -> {
+            Geocoder.getFirst("current location", geocodingEntry -> {
+                double latitude = geocodingEntry.latitude();
+                double longitude = geocodingEntry.longitude();
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("longitude", longitude);
+                startActivity(intent);
+            });
+        });
+
+        // "Home" card functionality (launches MainActivity with saved "home" location)
+        CardView homeCard = findViewById(R.id.homeCard);
+        homeCard.setOnLongClickListener(v -> {
+            showSearchPopupForHome();
+            return true;
+        });
+
+        homeCard.setOnClickListener(v -> {
+            String homeLocation = prefs.getString("home", null);
+            if (homeLocation != null) {
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                intent.putExtra("home_location", homeLocation);
+                startActivity(intent);
+            } else {
+                Toast.makeText(HomeActivity.this, "Home location not set.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void showSearchPopup() {
@@ -141,12 +191,11 @@ public class HomeActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Simulate the search query using Geocoder API
                 Geocoder.get(query, geocodingResults -> {
                     List<Geocoder.GeocodingEntry> entries = geocodingResults.results();
                     List<SearchResultItem> results = new ArrayList<>();
 
-                    for (int i = 0; i < Math.min(entries.size(), MAX_RESULTS); i++) {  // Limit results to MAX_RESULTS
+                    for (int i = 0; i < Math.min(entries.size(), MAX_RESULTS); i++) {
                         Geocoder.GeocodingEntry entry = entries.get(i);
                         String title = entry.name();
                         String subtitle = entry.admin1() + ", " + entry.country();
@@ -171,5 +220,22 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+    }
+    private void showSearchPopupForHome() {
+        View dialogView = getLayoutInflater().inflate(R.layout.popup_search, null);
+        EditText cityInput = dialogView.findViewById(R.id.searchEditText);
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(HomeActivity.this);
+        builder.setTitle("Set Home Location");
+        builder.setView(dialogView);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String city = cityInput.getText().toString();
+            SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
+            prefs.edit().putString("home", city).apply();
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.show();
     }
 }
