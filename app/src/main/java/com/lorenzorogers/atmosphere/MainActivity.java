@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.widget.ImageView;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.lorenzorogers.atmosphere.forecast.ForecastUtils;
 import com.lorenzorogers.atmosphere.forecast.LocationForecast;
 import com.lorenzorogers.atmosphere.network.Geocoder;
 
@@ -47,17 +48,20 @@ public class MainActivity extends AppCompatActivity {
                 TextView cityNameText = findViewById(R.id.cityValue);
                 TextView countryNameText = findViewById(R.id.countryValue);
 
-                if (isCelsius){
-                    temperatureText.setText(String.format("%s°", Math.round(forecast.current().temperature())));
-                }else{
-                    temperatureText.setText(String.format("%s°", Math.round((forecast.current().temperature()*9/5) + 32)));
-                }
-                windSpeedText.setText(String.format("%s km/h", (int)forecast.current().windSpeed()));
-                visibilityText.setText(String.format("%s km", forecast.hourly().get(0).visibility() / 1000));
+                // MAKE THIS.. BETTER, LoR!
+
+                LocationForecast stupidAmericanValues = ForecastUtils.convertToFahrenheit(forecast);
+
                 if (isCelsius) {
+                    temperatureText.setText(String.format("%s°", Math.round(forecast.current().temperature())));
+                    windSpeedText.setText(String.format("%s km/h", forecast.current().windSpeed()));
+                    visibilityText.setText(String.format("%s km", forecast.hourly().get(0).visibility() / 1000));
                     apparentTempText.setText(String.format("%s°", Math.round(forecast.current().apparentTemperature())));
-                }else{
-                    apparentTempText.setText(String.format("%s°", Math.round((forecast.current().apparentTemperature()*9/5)+32)));
+                } else {
+                    temperatureText.setText(String.format("%s° F", Math.round(stupidAmericanValues.current().temperature())));
+                    windSpeedText.setText(String.format("%s km/h", stupidAmericanValues.current().windSpeed()));
+                    visibilityText.setText(String.format("%s km", stupidAmericanValues.hourly().get(0).visibility() / 1000));
+                    apparentTempText.setText(String.format("%s° F", Math.round(stupidAmericanValues.current().apparentTemperature())));
                 }
                 cloudCoverText.setText(String.format("%s %%", forecast.current().cloudCover()));
 
