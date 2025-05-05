@@ -39,7 +39,7 @@
 
     <string name="title_cloud_cover">Cloud Cover</string>
     <string name="desc_cloud_cover">Placeholder for cloud cover</string>
-    <string name="placeholder_cloud_cover">-- %</string>
+    <string name="placeholder_cloud_cover">--%</string>
 
     <string name="app_bar_title">Weather Details</string>
     <string name="temperature">Temperature</string>
