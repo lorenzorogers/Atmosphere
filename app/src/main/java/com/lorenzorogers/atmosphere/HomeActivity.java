@@ -2,9 +2,12 @@ package com.lorenzorogers.atmosphere;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import android.Manifest;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +24,8 @@ import android.widget.Toast;
 import android.app.Dialog;
 import android.view.inputmethod.EditorInfo;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lorenzorogers.atmosphere.network.Geocoder;
@@ -77,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("AppSettings", MODE_PRIVATE);
         final boolean[] isCelsius = { prefs.getBoolean("isCelsius", true) };
 
-        unitToggleText.setText(isCelsius[0] ? "°C" : "°F");
+        unitToggleText.setText(isCelsius[0] ? "°C/km" : "°F/miles");
 
         settingsCard.setOnClickListener(v -> {
             isCelsius[0] = !isCelsius[0];
@@ -96,7 +101,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(adapter);
 
-        ItemTouchHelper.Callback callback = new MyItemTouchHelperCallback(adapter, this);
+        ItemTouchHelper.Callback callback = new MyItemTouchHelperCallback(adapter, this, this);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
 
@@ -105,23 +110,54 @@ public class HomeActivity extends AppCompatActivity {
 
         // "Here" card functionality (shows current location data)
         CardView hereCard = findViewById(R.id.hereCard);
-        hereCard.setOnClickListener(v -> {
-            Geocoder.getFirst("current location", geocodingEntry -> {
-                double latitude = geocodingEntry.latitude();
-                double longitude = geocodingEntry.longitude();
-                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                intent.putExtra("latitude", latitude);
-                intent.putExtra("longitude", longitude);
-                startActivity(intent);
-            });
-        });
+        hereCard.setOnClickListener(v -> Geocoder.getFirst("current location", geocodingEntry -> {
+            double latitude = geocodingEntry.latitude();
+            double longitude = geocodingEntry.longitude();
+            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            intent.putExtra("latitude", latitude);
+            intent.putExtra("longitude", longitude);
+            startActivity(intent);
+        }));
 
         // "Home" card functionality (launches MainActivity with saved "home" location)
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         CardView homeCard = findViewById(R.id.homeCard);
+
         homeCard.setOnLongClickListener(v -> {
-            showSearchPopupForHome();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Request permission if not granted
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1001);
+                return true;
+            }
+
+            fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+                if (location != null) {
+                    double lat = location.getLatitude();
+                    double lon = location.getLongitude();
+
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("home_lat", String.valueOf(lat));
+                    editor.putString("home_lon", String.valueOf(lon));
+                    editor.apply();
+
+                    Toast.makeText(this, "Home location saved!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Unable to get location.", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(e -> {
+                Toast.makeText(this, "Failed to get location: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
+
             return true;
         });
+
+        //Temporary
+        ImageView icon = findViewById(R.id.icon);
+        icon.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+
 
         homeCard.setOnClickListener(v -> {
             String homeLocation = prefs.getString("home", null);

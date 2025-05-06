@@ -1,5 +1,11 @@
 package com.lorenzorogers.atmosphere;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.content.Context;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.HapticFeedbackConstants;
 import android.util.Log;
 
@@ -14,10 +20,12 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     private final CardItemAdapter adapter;
     private final HomeActivity activity;
+    private final Context context;
 
-    public MyItemTouchHelperCallback(CardItemAdapter adapter, HomeActivity activity) {
+    public MyItemTouchHelperCallback(CardItemAdapter adapter, HomeActivity activity, Context context) {
         this.adapter = adapter;
         this.activity = activity;
+        this.context = context;
     }
 
     @Override
@@ -43,6 +51,12 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
         int fromPos = viewHolder.getAdapterPosition();
         int toPos = target.getAdapterPosition();
 
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        viewHolder.itemView.setElevation(200f);
+        if (vibrator != null) {
+            vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+        }
+
         if (fromPos < 0 || toPos < 0 || fromPos >= adapter.getItemCount() || toPos >= adapter.getItemCount()) {
             return false; // Don't crash on bad positions
         }
@@ -62,9 +76,7 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
         if (actionState == ItemTouchHelper.ACTION_STATE_DRAG && viewHolder != null) {
             // Log to verify drag start
-            viewHolder.itemView.setElevation(20f);
-            viewHolder.itemView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-            Log.d("MyItemTouchHelper", "Drag started, providing haptic feedback");
+            //Log.d("MyItemTouchHelper", "Drag started, providing haptic feedback");
 
             // Check if the item can provide haptic feedback
             if (viewHolder.itemView.isHapticFeedbackEnabled()) {

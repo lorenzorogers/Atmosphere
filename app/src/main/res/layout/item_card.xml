@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="8dp"
     android:translationZ="12dp"
+    android:elevation="200dp"
     android:backgroundTint="@color/lavender"
     app:cardCornerRadius="16dp"
     app:cardElevation="8dp">
@@ -51,8 +52,8 @@
 
         <ImageView
             android:id="@+id/moreOptions"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_alignParentEnd="true"
             android:src="@drawable/more_vert_24px"
             android:contentDescription="More options" />

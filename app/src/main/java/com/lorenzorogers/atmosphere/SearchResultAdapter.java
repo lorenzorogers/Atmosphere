@@ -45,14 +45,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         SearchResultItem item = itemList.get(position);
         holder.titleText.setText(item.getTitle());
         holder.subtitleText.setText(item.getSubtitle());
-
-        // Display coordinates if available
-        if (item.hasCoordinates()) {
-            holder.coordinatesText.setVisibility(View.VISIBLE);
-            holder.coordinatesText.setText(String.format(Locale.getDefault(), "Lat: %f, Lon: %f", item.getLatitude(), item.getLongitude()));
-        } else {
-            holder.coordinatesText.setVisibility(View.GONE);
-        }
     }
 
     @Override
