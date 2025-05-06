@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        Bundle bundle = getIntent().getExtras();
+        String query = "Vancouver";
+        if (bundle != null) {
+            query = bundle.getString("query");
+        }
+
         // Back button navigates to HomeActivity
         ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     visibilityText.setText(String.format("%s km", stupidAmericanValues.hourly().get(0).visibility() / 1000));
                     apparentTempText.setText(String.format("%s° F", Math.round(stupidAmericanValues.current().apparentTemperature())));
                 }
-                cloudCoverText.setText(String.format("%s %%", forecast.current().cloudCover()));
+                cloudCoverText.setText(String.format("%s%%", forecast.current().cloudCover()));
 
                 cityNameText.setText(String.format("%s", results.name()));
                 countryNameText.setText(results.country());
