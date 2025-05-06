@@ -6,8 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="8dp"
-    android:translationZ="12dp"
-    android:elevation="200dp"
     android:backgroundTint="@color/atmosphere_purple_100"
     app:cardCornerRadius="16dp">
 

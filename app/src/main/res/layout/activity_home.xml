@@ -182,7 +182,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
-                android:elevation="200dp"
                 android:contentDescription="@string/activityHomeRecyclerViewContentDesc"
                 android:nestedScrollingEnabled="false"
                 android:clipToPadding="false"
