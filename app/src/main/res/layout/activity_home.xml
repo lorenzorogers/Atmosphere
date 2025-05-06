@@ -22,8 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp">
+            android:paddingStart="60dp"
+            android:paddingEnd="60dp">
 
             <!-- Top bar -->
             <ImageView
@@ -70,6 +70,13 @@
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/formatBar2"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:padding="8dp"
+                    app:tint="@color/white" />
             </LinearLayout>
 
             <!-- Two-column grid layout for cards -->
@@ -229,7 +236,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:textSize="13sp"
-                            android:text="Add a new location\nmanually"
+                            android:text="Search for\nlocations"
                             android:textColor="@color/black"
                             android:textFontWeight="600" />
                     </LinearLayout>
@@ -270,7 +277,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:textSize="13sp"
-                            android:text="Toggle between °C/km\nand°F/miles"
+                            android:text="Toggle between\n°C/km and°F/miles"
                             android:textColor="@color/black"
                             android:textFontWeight="600" />
                     </LinearLayout>

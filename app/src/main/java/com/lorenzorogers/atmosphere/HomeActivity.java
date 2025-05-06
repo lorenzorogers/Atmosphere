@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "card_prefs";
+    private FusedLocationProviderClient fusedLocationClient;
     private static final String CARD_LIST_KEY = "card_list";
     private static final int MAX_RESULTS = 5;
 
@@ -64,7 +66,20 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1001) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission granted. Tap again.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -72,8 +87,8 @@ public class HomeActivity extends AppCompatActivity {
 
         List<CardItem> cardList = loadCardList();
         if (cardList.isEmpty()) {
-            cardList.add(new CardItem("Victoria", "22°", R.drawable.language_24px, true));
-            cardList.add(new CardItem("Toronto", "20°", R.drawable.language_24px, true));
+            //cardList.add(new CardItem("Victoria", "22°", R.drawable.language_24px, true));
+            //cardList.add(new CardItem("Toronto", "20°", R.drawable.language_24px, true));
         }
 
         TextView unitToggleText = findViewById(R.id.unitToggleText);
@@ -110,14 +125,42 @@ public class HomeActivity extends AppCompatActivity {
 
         // "Here" card functionality (shows current location data)
         CardView hereCard = findViewById(R.id.hereCard);
-        hereCard.setOnClickListener(v -> Geocoder.getFirst("current location", geocodingEntry -> {
-            double latitude = geocodingEntry.latitude();
-            double longitude = geocodingEntry.longitude();
-            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-            intent.putExtra("latitude", latitude);
-            intent.putExtra("longitude", longitude);
-            startActivity(intent);
-        }));
+        hereCard.setOnClickListener(v -> {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1001);
+                return;
+            }
+
+            Log.d("LocationCheck", "Requesting location...");
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(location -> {
+                        if (location != null) {
+                            Log.d("LocationCheck", "Got location: " + location.getLatitude() + ", " + location.getLongitude());
+                            // Launch MainActivity
+                        } else {
+                            Log.w("LocationCheck", "Location is null");
+                            Toast.makeText(this, "Unable to get location.", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("LocationCheck", "Failed to get location: " + e.getMessage());
+                        Toast.makeText(this, "Error getting location.", Toast.LENGTH_SHORT).show();
+                    });
+
+            fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+                if (location != null) {
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+                    Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                    intent.putExtra("latitude", latitude);
+                    intent.putExtra("longitude", longitude);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(HomeActivity.this, "Unable to get location.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+
 
         // "Home" card functionality (launches MainActivity with saved "home" location)
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -125,7 +168,6 @@ public class HomeActivity extends AppCompatActivity {
 
         homeCard.setOnLongClickListener(v -> {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Request permission if not granted
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1001);
                 return true;
             }
@@ -147,7 +189,6 @@ public class HomeActivity extends AppCompatActivity {
             }).addOnFailureListener(e -> {
                 Toast.makeText(this, "Failed to get location: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
-
             return true;
         });
 
@@ -234,7 +275,7 @@ public class HomeActivity extends AppCompatActivity {
                     for (int i = 0; i < Math.min(entries.size(), MAX_RESULTS); i++) {
                         Geocoder.GeocodingEntry entry = entries.get(i);
                         String title = entry.name();
-                        String subtitle = entry.admin1() + ", " + entry.country();
+                        String subtitle = entry.admin1() != null ? String.format("%s, %s", entry.admin1(), entry.country()) : entry.country();
                         double lat = entry.latitude();
                         double lon = entry.longitude();
                         results.add(new SearchResultItem(title, subtitle, lat, lon));
