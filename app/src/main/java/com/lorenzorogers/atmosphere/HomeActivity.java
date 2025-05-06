@@ -155,6 +155,9 @@ public class HomeActivity extends AppCompatActivity {
         ImageView icon = findViewById(R.id.icon);
         icon.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("query", "Calgary");
+            intent.putExtras(bundle);
             startActivity(intent);
         });
 

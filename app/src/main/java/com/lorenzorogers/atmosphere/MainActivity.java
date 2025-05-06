@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
         });
-        Geocoder.getFirst("Vancouver", results -> {
+        Geocoder.getFirst(query, results -> {
             LocationForecast.get(results.latitude(), results.longitude(), results, forecast -> {
                 TextView temperatureText = findViewById(R.id.temperatureValue);
                 TextView windSpeedText = findViewById(R.id.windSpeedValue);
