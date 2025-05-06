@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        Bundle bundle = getIntent().getExtras();
+        String query = "Vancouver";
+        if (bundle != null) {
+            query = bundle.getString("query");
+        }
+
         // Back button navigates to HomeActivity
         ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {

@@ -53,4 +53,6 @@ public class Geocoder {
             handler.post(callbackRunnable);
         });
     }
+
+    public record Coordinates(double longitude, double latitude) {}
 }
