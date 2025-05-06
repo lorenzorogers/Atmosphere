@@ -8,13 +8,11 @@
     android:layout_margin="8dp"
     android:translationZ="12dp"
     android:elevation="200dp"
-    android:backgroundTint="@color/lavender"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="8dp">
+    android:backgroundTint="@color/atmosphere_purple_100"
+    app:cardCornerRadius="16dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:backgroundTint="@color/lavender"
         android:layout_height="wrap_content"
         android:padding="16dp">
 
@@ -25,7 +23,8 @@
             android:layout_height="48dp"
             android:layout_alignParentStart="true"
             android:src="@drawable/language_24px"
-            app:tint="@color/black"/>
+            app:tint="@color/atmosphere_purple_950"
+            />
 
         <TextView
             android:id="@+id/cardTitle"
@@ -34,7 +33,7 @@
             android:layout_toEndOf="@id/cardIcon"
             android:layout_marginStart="12dp"
             android:text="Title"
-            app:tint="@color/black"
+            android:textColor="@color/atmosphere_purple_950"
             android:fontFamily="@font/intervariable"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -48,11 +47,12 @@
             android:layout_toEndOf="@id/cardIcon"
             android:layout_marginStart="12dp"
             android:text="Subtitle"
-            app:tint="@color/black"
+            android:textColor="@color/atmosphere_purple_950"
             android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/moreOptions"
+            app:tint="@color/black"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_alignParentEnd="true"

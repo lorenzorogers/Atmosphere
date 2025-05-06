@@ -87,8 +87,8 @@ public class HomeActivity extends AppCompatActivity {
 
         List<CardItem> cardList = loadCardList();
         if (cardList.isEmpty()) {
-            //cardList.add(new CardItem("Victoria", "22°", R.drawable.language_24px, true));
-            //cardList.add(new CardItem("Toronto", "20°", R.drawable.language_24px, true));
+            cardList.add(new CardItem("Victoria", "22°", R.drawable.language_24px, true));
+            cardList.add(new CardItem("Toronto", "20°", R.drawable.language_24px, true));
         }
 
         TextView unitToggleText = findViewById(R.id.unitToggleText);

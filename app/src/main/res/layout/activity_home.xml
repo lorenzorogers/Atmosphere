@@ -96,9 +96,8 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    app:cardBackgroundColor="@color/yellow"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp">
+                    app:cardBackgroundColor="@color/atmosphere_yellow_100"
+                    app:cardCornerRadius="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -111,14 +110,14 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:src="@drawable/location_on_24px"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_yellow_950" />
 
                         <TextView
                             android:id="@+id/hereLocationText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Here"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_yellow_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -129,7 +128,7 @@
                             android:gravity="center"
                             android:textSize="13sp"
                             android:text="Weather data for\nwherever you are"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_yellow_950"
                             android:textFontWeight="600" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -139,9 +138,8 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    app:cardBackgroundColor="@color/lavender"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp">
+                    app:cardBackgroundColor="@color/atmosphere_purple_100"
+                    app:cardCornerRadius="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -154,14 +152,14 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:src="@drawable/home_pin_24px"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_purple_950" />
 
                         <TextView
                             android:id="@+id/homeLocationText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Home"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_purple_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -172,7 +170,7 @@
                             android:gravity="center"
                             android:textSize="12sp"
                             android:text="Long press to set home\nto your current location"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_purple_950"
                             android:textFontWeight="600" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -207,9 +205,8 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    app:cardBackgroundColor="@color/lavender"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp">
+                    app:cardBackgroundColor="@color/atmosphere_purple_100"
+                    app:cardCornerRadius="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -221,13 +218,13 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:src="@drawable/add_24px"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_purple_950" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Add location"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_purple_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -237,7 +234,7 @@
                             android:gravity="center"
                             android:textSize="13sp"
                             android:text="Search for\nlocations"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_purple_950"
                             android:textFontWeight="600" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -247,9 +244,8 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    app:cardBackgroundColor="@color/lavender"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp">
+                    app:cardBackgroundColor="@color/atmosphere_purple_100"
+                    app:cardCornerRadius="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -261,14 +257,14 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:src="@drawable/ruler"
-                            app:tint="@color/black" />
+                            app:tint="@color/atmosphere_purple_950" />
 
                         <TextView
                             android:id="@+id/unitToggleText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="°C/°F"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_purple_950"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -278,7 +274,7 @@
                             android:gravity="center"
                             android:textSize="13sp"
                             android:text="Toggle between\n°C/km and°F/miles"
-                            android:textColor="@color/black"
+                            android:textColor="@color/atmosphere_purple_950"
                             android:textFontWeight="600" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
