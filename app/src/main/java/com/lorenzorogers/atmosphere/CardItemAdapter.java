@@ -68,6 +68,7 @@ public class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.ViewHo
                     int pos = holder.getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
                         cardItems.remove(pos);
+                        HomeActivity.saveCardList(cardItems, context);
                         notifyItemRemoved(pos);
                     }
                     return true;

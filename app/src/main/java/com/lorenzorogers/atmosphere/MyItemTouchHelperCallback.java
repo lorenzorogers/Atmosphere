@@ -65,7 +65,7 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
         adapter.notifyItemMoved(fromPos, toPos);
 
         // Save the new list order
-        activity.saveCardList(adapter.getCardItems());
+        HomeActivity.saveCardList(adapter.getCardItems(), context);
 
         return true;
     }

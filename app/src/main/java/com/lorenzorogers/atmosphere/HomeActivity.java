@@ -1,5 +1,6 @@
 package com.lorenzorogers.atmosphere;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -44,8 +45,8 @@ public class HomeActivity extends AppCompatActivity {
     private static final String CARD_LIST_KEY = "card_list";
     private static final int MAX_RESULTS = 5;
 
-    public void saveCardList(List<CardItem> list) {
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+    public static void saveCardList(List<CardItem> list, Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
         Gson gson = new Gson();
@@ -102,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
             ));
         }
 
-        saveCardList(cardList);
+        saveCardList(cardList, this);
 
         TextView unitToggleText = findViewById(R.id.unitToggleText);
         CardView settingsCard = findViewById(R.id.unitCard);
@@ -242,7 +243,7 @@ public class HomeActivity extends AppCompatActivity {
         List<SearchResultItem> searchResults = new ArrayList<>();
         SearchResultAdapter searchResultAdapter = new SearchResultAdapter(searchResults, c -> {
             cardList.add(c);
-            saveCardList(cardList);
+            saveCardList(cardList, this);
             RecyclerView recyclerView = findViewById(R.id.recyclerView);
             recyclerView.setMinimumHeight(recyclerView.computeVerticalScrollRange());
             dialog.hide();
