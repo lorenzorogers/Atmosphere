@@ -123,7 +123,7 @@ public class HomeActivity extends AppCompatActivity {
 
         recyclerView.setTranslationZ(100f);
 
-        CardItemAdapter adapter = new CardItemAdapter(cardList);
+        CardItemAdapter adapter = new CardItemAdapter(this, cardList);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(adapter);
 

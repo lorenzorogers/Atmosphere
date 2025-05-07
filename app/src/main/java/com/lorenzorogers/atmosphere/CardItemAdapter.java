@@ -1,11 +1,13 @@
 package com.lorenzorogers.atmosphere;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +18,12 @@ import java.util.List;
 
 public class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.ViewHolder> {
 
+    private Context context;
+
     private final List<CardItem> cardItems;
 
-    public CardItemAdapter(List<CardItem> cardItems) {
+    public CardItemAdapter(Context context, List<CardItem> cardItems) {
+        this.context = context;
         this.cardItems = cardItems;
     }
 
@@ -53,6 +58,24 @@ public class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.ViewHo
             intent.putExtras(bundle);
             view.getContext().startActivity(intent);
         });
+
+
+        holder.moreOptions.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(context, holder.moreOptions);
+            popup.inflate(R.menu.card_item_menu);
+            popup.setOnMenuItemClickListener(more_item -> {
+                if (more_item.getItemId() == R.id.menu_remove) {
+                    int pos = holder.getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+                        cardItems.remove(pos);
+                        notifyItemRemoved(pos);
+                    }
+                    return true;
+                }
+                return false;
+            });
+            popup.show();
+        });
     }
 
     @Override
@@ -67,12 +90,15 @@ public class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.ViewHo
 
         CardView cardItemContainer;
 
+        ImageView moreOptions;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.cardIcon);
             titleView = itemView.findViewById(R.id.cardTitle);
             subtitleView = itemView.findViewById(R.id.cardSubtitle);
             cardItemContainer = itemView.findViewById(R.id.cardItemContainer);
+            moreOptions = itemView.findViewById(R.id.moreOptions);
         }
     }
 }
