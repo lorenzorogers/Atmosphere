@@ -15,6 +15,8 @@ import com.lorenzorogers.atmosphere.forecast.ForecastUtils;
 import com.lorenzorogers.atmosphere.forecast.LocationForecast;
 import com.lorenzorogers.atmosphere.network.Geocoder;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -59,16 +61,17 @@ public class MainActivity extends AppCompatActivity {
                 // MAKE THIS.. BETTER, LoR!
 
                 LocationForecast stupidAmericanValues = ForecastUtils.convertToFahrenheit(forecast);
+                DecimalFormat df = new DecimalFormat("#.#");
 
                 if (isCelsius) {
                     temperatureText.setText(String.format("%s°", Math.round(forecast.current().temperature())));
-                    windSpeedText.setText(String.format("%s km/h", forecast.current().windSpeed()));
+                    windSpeedText.setText(String.format("%s km/h", df.format(forecast.current().windSpeed())));
                     visibilityText.setText(String.format("%s km", forecast.hourly().get(0).visibility() / 1000));
                     apparentTempText.setText(String.format("%s°", Math.round(forecast.current().apparentTemperature())));
                 } else {
                     temperatureText.setText(String.format("%s° F", Math.round(stupidAmericanValues.current().temperature())));
-                    windSpeedText.setText(String.format("%s km/h", stupidAmericanValues.current().windSpeed()));
-                    visibilityText.setText(String.format("%s km", stupidAmericanValues.hourly().get(0).visibility() / 1000));
+                    windSpeedText.setText(String.format("%s mph", df.format(stupidAmericanValues.current().windSpeed())));
+                    visibilityText.setText(String.format("%s mi", stupidAmericanValues.hourly().get(0).visibility() / 1000));
                     apparentTempText.setText(String.format("%s° F", Math.round(stupidAmericanValues.current().apparentTemperature())));
                 }
                 cloudCoverText.setText(String.format("%s%%", forecast.current().cloudCover()));
