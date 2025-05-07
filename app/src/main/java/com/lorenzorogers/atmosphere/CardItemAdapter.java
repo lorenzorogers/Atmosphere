@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.ViewHolder> {
 
-    private Context context;
+    private final Context context;
 
     private final List<CardItem> cardItems;
 
