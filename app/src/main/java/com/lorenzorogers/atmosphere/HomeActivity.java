@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
+
 import android.Manifest;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,13 +55,14 @@ public class HomeActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private List<CardItem> loadCardList() {
+    public List<CardItem> loadCardList() {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String json = prefs.getString(CARD_LIST_KEY, null);
 
         if (json != null) {
             Gson gson = new Gson();
-            Type type = new TypeToken<List<CardItem>>() {}.getType();
+            Type type = new TypeToken<List<CardItem>>() {
+            }.getType();
             return gson.fromJson(json, type);
         }
 
@@ -84,18 +88,27 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         Link.makeTextViewLink(this, "copyrightLink");
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         List<CardItem> cardList = loadCardList();
         if (cardList.isEmpty()) {
-            cardList.add(new CardItem("Victoria", "22°", R.drawable.language_24px, true));
-            cardList.add(new CardItem("Toronto", "20°", R.drawable.language_24px, true));
+            cardList.add(new CardItem(
+                    "Victoria",
+                    "British Columbia, Canada",
+                    48.426037,
+                    -123.363684,
+                    R.drawable.language_24px,
+                    true
+            ));
         }
+
+        saveCardList(cardList);
 
         TextView unitToggleText = findViewById(R.id.unitToggleText);
         CardView settingsCard = findViewById(R.id.unitCard);
 
         SharedPreferences prefs = getSharedPreferences("AppSettings", MODE_PRIVATE);
-        final boolean[] isCelsius = { prefs.getBoolean("isCelsius", true) };
+        final boolean[] isCelsius = {prefs.getBoolean("isCelsius", true)};
 
         unitToggleText.setText(isCelsius[0] ? "°C/km" : "°F/miles");
 
@@ -108,8 +121,6 @@ public class HomeActivity extends AppCompatActivity {
             editor.apply(); // Commit the new value — no need to immediately re-read it
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-
         recyclerView.setTranslationZ(100f);
 
         CardItemAdapter adapter = new CardItemAdapter(cardList);
@@ -121,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {
         touchHelper.attachToRecyclerView(recyclerView);
 
         CardView addCard = findViewById(R.id.addCard);
-        addCard.setOnClickListener(v -> showSearchPopup());
+        addCard.setOnClickListener(v -> showSearchPopup(cardList));
 
         // "Here" card functionality (shows current location data)
         CardView hereCard = findViewById(R.id.hereCard);
@@ -193,14 +204,14 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         //Temporary
-        ImageView icon = findViewById(R.id.icon);
+        /*ImageView icon = findViewById(R.id.icon);
         icon.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("query", "Calgary");
             intent.putExtras(bundle);
             startActivity(intent);
-        });
+        }); */
 
 
         homeCard.setOnClickListener(v -> {
@@ -215,7 +226,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void showSearchPopup() {
+    private void showSearchPopup(List<CardItem> cardList) {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.popup_search);
         if (dialog.getWindow() != null) {
@@ -229,7 +240,13 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerView searchResultsRecyclerView = dialog.findViewById(R.id.recyclerViewSearchResults);
 
         List<SearchResultItem> searchResults = new ArrayList<>();
-        SearchResultAdapter searchResultAdapter = new SearchResultAdapter(searchResults);
+        SearchResultAdapter searchResultAdapter = new SearchResultAdapter(searchResults, c -> {
+            cardList.add(c);
+            saveCardList(cardList);
+            RecyclerView recyclerView = findViewById(R.id.recyclerView);
+            recyclerView.setMinimumHeight(recyclerView.computeVerticalScrollRange());
+            dialog.hide();
+        });
         searchResultsRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         searchResultsRecyclerView.setAdapter(searchResultAdapter);
 
@@ -257,7 +274,8 @@ public class HomeActivity extends AppCompatActivity {
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
@@ -298,9 +316,11 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {}
+            public void afterTextChanged(Editable editable) {
+            }
         });
     }
+
     private void showSearchPopupForHome() {
         View dialogView = getLayoutInflater().inflate(R.layout.popup_search, null);
         EditText cityInput = dialogView.findViewById(R.id.searchEditText);

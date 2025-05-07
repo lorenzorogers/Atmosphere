@@ -27,7 +27,6 @@
             android:id="@+id/searchEditText"
             android:layout_width="0dp"
             android:layout_weight="1"
-            app:tint="@color/white"
             android:fontFamily="@font/intervariable"
             android:textFontWeight="1000"
             android:layout_height="wrap_content"

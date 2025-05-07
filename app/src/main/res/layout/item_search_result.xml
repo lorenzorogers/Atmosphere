@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/searchResultItemContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/lavender"
+    app:cardBackgroundColor="@color/atmosphere_purple_100"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
@@ -23,7 +24,7 @@
             android:layout_height="24dp"
             android:contentDescription="icon"
             android:src="@drawable/language_24px"
-            app:tint="@color/black"/>
+            app:tint="@color/atmosphere_purple_950"/>
 
         <TextView
             android:id="@+id/textViewSearchResultTitle"
@@ -32,7 +33,7 @@
             android:layout_marginHorizontal="4dp"
             android:text="Sample Location"
             android:textSize="18sp"
-            android:textColor="@color/black"
+            android:textColor="@color/atmosphere_purple_950"
             android:fontFamily="@font/intervariable"
             android:textFontWeight="600"
             android:textStyle="bold"
@@ -44,7 +45,7 @@
             android:layout_height="wrap_content"
             android:text="Region or Country"
             android:textSize="14sp"
-            android:textColor="@color/black"
+            android:textColor="@color/atmosphere_purple_950"
             android:fontFamily="@font/intervariable"
             android:textFontWeight="500"
             android:gravity="center"

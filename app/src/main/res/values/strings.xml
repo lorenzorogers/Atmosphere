@@ -49,6 +49,7 @@
     <string name="country_placeholder">--</string>
 
     <string name="openmeteoLink">https://open-meteo.com</string>
+    <string name="openStreetMapLink">https://openstreetmap.org</string>
 
     <string name="appIconDescription">Atmosphere app icon; A sun and moon, arranged above each other so both are visible.</string>
     <string name="activityHomeRecyclerViewContentDesc">Your personal weather locations</string>

@@ -286,7 +286,7 @@
         android:id="@+id/copyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="©2025 Lorenzo Rogers and Michael Carpiano.\nAll rights reserved.\nCheck out our weather provider,"
+        android:text="©2025 Lorenzo Rogers and Michael Carpiano.\nAll rights reserved.\n\Map data from OpenStreetMap.\nCheck out our weather provider,"
         android:textColor="@color/black"
         android:textSize="12sp"
         android:textStyle="bold"

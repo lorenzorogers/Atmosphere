@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.os.Vibrator;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -43,13 +41,15 @@ public class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CardItem item = cardItems.get(position);
-        holder.imageView.setImageResource(item.getResIcon());  // small icon
-        holder.titleView.setText(item.getTitle());
-        holder.subtitleView.setText(item.getSubtitle());
+        holder.imageView.setImageResource(item.resIcon());  // small icon
+        holder.titleView.setText(item.title());
+        holder.subtitleView.setText(item.subtitle());
         holder.cardItemContainer.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), MainActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putString("query", item.getTitle());
+            System.out.println(item.latitude() + " " + item.longitude());
+            bundle.putDouble("latitude", item.latitude());
+            bundle.putDouble("longitude", item.longitude());
             intent.putExtras(bundle);
             view.getContext().startActivity(intent);
         });

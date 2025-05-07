@@ -32,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Bundle bundle = getIntent().getExtras();
-        String query = "Vancouver";
+        double latitude = 48.426037;
+        double longitude = -123.363684;
         if (bundle != null) {
-            query = bundle.getString("query");
+            latitude = bundle.getDouble("latitude");
+            longitude = bundle.getDouble("longitude");
         }
 
         // Back button navigates to HomeActivity
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
         });
-        Geocoder.getFirst(query, results -> {
+        Geocoder.get(latitude, longitude, results -> {
             LocationForecast.get(results.latitude(), results.longitude(), results, forecast -> {
                 TextView temperatureText = findViewById(R.id.temperatureValue);
                 TextView windSpeedText = findViewById(R.id.windSpeedValue);

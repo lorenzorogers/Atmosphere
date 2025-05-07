@@ -84,6 +84,17 @@ public class RequestUtils {
         fetch(requestUrl, callback);
     }
 
+    public static void fetchReverseGeocoder(double latitude, double longitude, Consumer<String> callback) {
+        String requestUrl = new RequestBuilder("https://nominatim.openstreetmap.org/reverse")
+                .addParameter("lat", latitude)
+                .addParameter("lon", longitude)
+                .addParameter("format", "json")
+                .build();
+
+        System.out.println(requestUrl);
+        fetch(requestUrl, callback);
+    }
+
     public static String urlPrepare(String input) {
         return Uri.encode(input);
     }

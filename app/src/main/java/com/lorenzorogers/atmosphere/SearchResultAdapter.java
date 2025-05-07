@@ -5,28 +5,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
 
     private List<SearchResultItem> itemList;
-
-    public SearchResultAdapter(List<SearchResultItem> itemList) {
+    Consumer<CardItem> addCallback;
+    public SearchResultAdapter(List<SearchResultItem> itemList, Consumer<CardItem> callback) {
         this.itemList = itemList;
+        this.addCallback = callback;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView titleText;
         TextView subtitleText;
+
+        CardView container;
         TextView coordinatesText; // Added for displaying geo info
 
         public ViewHolder(View itemView) {
             super(itemView);
             titleText = itemView.findViewById(R.id.textViewSearchResultTitle);
             subtitleText = itemView.findViewById(R.id.textViewSearchResultSubtitle);
+            container = itemView.findViewById(R.id.searchResultItemContainer);
             //coordinatesText = itemView.findViewById(R.id.textViewSearchResultCoordinates); // New TextView for coordinates
         }
     }
@@ -45,6 +51,16 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         SearchResultItem item = itemList.get(position);
         holder.titleText.setText(item.getTitle());
         holder.subtitleText.setText(item.getSubtitle());
+        holder.container.setOnClickListener(listener -> {
+            addCallback.accept(new CardItem(
+                    item.getTitle(),
+                    item.getSubtitle(),
+                    item.getLatitude(),
+                    item.getLongitude(),
+                    R.drawable.language_24px,
+                    true
+            ));
+        });
     }
 
     @Override
