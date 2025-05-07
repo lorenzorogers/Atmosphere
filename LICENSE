@@ -1,4 +1,36 @@
-Copyright (c) 2025 Lorenzo Rogers & Michael Carpiano
+Atmosphere Weather
+
+© 2025 Michael Carpiano and Lorenzo Rogers. Some rights reserved.
+
+This application was independently designed and developed by Michael Carpiano and Lorenzo Rogers, together under the name Atmosphere Co. It incorporates open-source components and services in accordance with their respective licenses. Please see directly below for more information.
+
+----Third-Party Libraries and Services Used and Referenced----
+
+- Material 3 (Jetpack Compose / Android UI)
+  UI components and design principles based on Google's Material Design 3.  
+  Licensed under the Apache License 2.0 https://www.apache.org/licenses/LICENSE-2.0.  
+  Source: Material Components for Android https://github.com/material-components/material-components-android.
+
+- Open-Meteo
+  Provides weather forecast data.  
+  API data is licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/.  
+  - Source code is licensed under the GNU Affero General Public License Version 3 (AGPLv3): https://www.gnu.org/licenses/agpl-3.0.html.  
+  Attribution: Weather data by Open-Meteo.com: https://open-meteo.com.
+
+- Fused Location Provider API
+  Part of Google Play Services.  
+  Usage subject to Google Play Services Terms of Service: https://developers.google.com/android/guides/overview.
+
+- OpenStreetMap
+  Used for geolocation and reverse geocoding.  
+  Data is ©OpenStreetMap contributors: https://www.openstreetmap.org/copyright.
+  and available under the Open Database License (ODbL): https://opendatacommons.org/licenses/odbl/1-0/.
+
+----
+
+All other code, assets, logos, and designs were created by the authors.
+
+This project is licensed under the Mozilla Public License Version 2.0: https://www.mozilla.org/MPL/2.0/. See directly below for more information.
 
 Mozilla Public License Version 2.0
 ==================================
