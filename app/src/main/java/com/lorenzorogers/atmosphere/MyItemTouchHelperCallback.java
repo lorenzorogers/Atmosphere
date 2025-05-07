@@ -52,7 +52,6 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
         int toPos = target.getAdapterPosition();
 
         System.out.println("hii");
-        viewHolder.itemView.bringToFront();
 
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         viewHolder.itemView.setElevation(200f);
