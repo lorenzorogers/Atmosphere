@@ -1,7 +1,3 @@
-# Atmosphere Co. LLC
+# Atmosphere
 
-Redefining weather. Setting the new standard for weather apps everywhere. 
-
-In Victoria. And maybe more places.
-
-If we even get that far.
+The weather app to end app weather apps. Currently in Beta.
