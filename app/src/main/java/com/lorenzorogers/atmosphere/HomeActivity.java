@@ -321,22 +321,4 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void showSearchPopupForHome() {
-        View dialogView = getLayoutInflater().inflate(R.layout.popup_search, null);
-        EditText cityInput = dialogView.findViewById(R.id.searchEditText);
-
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(HomeActivity.this);
-        builder.setTitle("Set Home Location");
-        builder.setView(dialogView);
-
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            String city = cityInput.getText().toString();
-            SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
-            prefs.edit().putString("home", city).apply();
-        });
-
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-        builder.show();
-    }
 }
